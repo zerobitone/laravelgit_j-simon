@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-
-    $users = DB::connection('mysql')->select('select * from users where id = :id', ['id' => 4]);
-    print_r($users);
-
+    echo "hihi docker";
     return view('welcome');
 });
