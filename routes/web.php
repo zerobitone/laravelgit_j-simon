@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    echo "hihi docker";
+    echo "hihi docker ;-)";
     return view('welcome');
 });
+
+
+
+
+
