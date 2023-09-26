@@ -78,3 +78,56 @@ Route::resource('/meetings',MeetingController::class)
   DELETE          meetings/{meeting} ............................... meetings.destroy › MeetingController@destroy  
   GET|HEAD        meetings/{meeting}/edit ................................ meetings.edit › MeetingController@edit  
   */
+
+  /* 
+	// uebung_04
+	
+	zuerst muss der Controller erstellt werden, erst dann kann die route diesen benutzen!
+
+	eine GET-Route 
+	URL: http://routinglaravel.test/helloworld2
+	
+	Der Output kommt nun nicht mehr aus einer Closure von dieser Datei (function(){ return 'output';}
+	
+	Sondern ueber eine Umleitung zur Methode des Controllers!
+
+	
+	php artisan route:list
+
+	
+	*/ 
+// bis L7
+//Route::get('/helloworld2','TestController@printMessage');
+
+// ab L8
+use  App\Http\Controllers\TestController;
+Route::get('/helloworld2',[TestController::class,"printMessage"]);
+
+/* 
+	uebung_05
+	
+	zuerst muessen die beiden Methoden im Controller erstellt werden, erst dann koennen die routes diese benutzen!
+	
+	php artisan route:list
+	
+	URL: http://routinglaravel.test/name/jens/nachname/simon
+		 http://routinglaravel.test/name/kim/nachname/schmitz
+		 http://routinglaravel.test/name/nachname/
+		 http://routinglaravel.test/name/jens/nachname/
+		 http://routinglaravel.test/name/jens/nachname
+		 	 
+		 
+	URL: http://routinglaravel.test/user/jens
+		 http://routinglaravel.test/user/
+		 http://routinglaravel.test/user
+*/ 
+
+// bis L7
+// Route::get('/name/{name}/nachname/{nachname}','TestController@showName');	
+// Route::get('/user/{name?}','TestController@showUsername');
+
+// ab L8
+
+Route::get('/name/{name}/nachname/{nachname}',[TestController::class,'showName']);	
+Route::get('/user/{name?}',[TestController::class,'showUsername']);
+

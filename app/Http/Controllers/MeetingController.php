@@ -11,7 +11,7 @@ class MeetingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index():string
     {
         // zeige alle Meetings an
         // select - sql => alle meetings abholen

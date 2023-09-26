@@ -25,8 +25,8 @@
         <div >
             auf Docker unter Windows<br>
 
-            <a href="/uebungslinks.html">zu den Links für die Übungen</a><br>
-            <a href="/teste_meeting_controller.html">Test des Meeting_Controllers</a>
+            <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/uebungslinks.html">zu den Links für die Übungen</a><br>
+            <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/teste_meeting_controller.html">Test des Meeting_Controllers</a>
         </div>
 
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
