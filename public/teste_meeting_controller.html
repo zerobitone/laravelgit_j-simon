@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Test der routes des Meeting-Controller</h3>
+    <a href="meetings">index - Action wird getestet </a><br>
+    <a href="meetings/create"> create - Action wird getestet</a><br>
+    <a href="meetings/Jens"> show - Action wird getestet - Fehler soll kommen</a><br>
+    <a href="meetings/11"> show - Action wird getestet</a><br>
+    <a href="meetings/11/edit"> edit - Action wird getestet</a><br>
+
+    <form action="meetings" method="GET">
+      <input type="submit">index - Action wird getestet
+    </form>
+
+    <form action="meetings" method="POST">
+      <input type="submit">store - Action wird getestet
+    </form>
+
+    <form action="meetings/12" method="POST"> <!-- bei show falsch gelandet!-->
+    
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="submit">destroy - Action wird getestet
+    </form>
+
+    <form action="meetings/12" method="POST"> <!-- bei show falsch gelandet!-->
+    
+      <input type="hidden" name="_method" value="PUT">
+      <input type="submit">update - Action wird getestet
+    </form>
+
+<!--
+  GET|HEAD        meetings ............................................. meetings.index › MeetingController@index
+ 
+  GET|HEAD        meetings/create .................................... meetings.create › MeetingController@create
+
+  GET|HEAD        meetings/{meeting} ..................................... meetings.show › MeetingController@show
+
+  GET|HEAD        meetings/{meeting}/edit ................................ meetings.edit › MeetingController@edit  
+  */ 
+  PUT|PATCH       meetings/{meeting} ................................. meetings.update › MeetingController@update
+  DELETE          meetings/{meeting} ............................... meetings.destroy › MeetingController@destroy  
+  POST            meetings ............................................. meetings.store › MeetingController@store
+-->
+</body>
+</html>

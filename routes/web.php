@@ -60,3 +60,21 @@ Route::get('/name/{name}/nachname/{nachname}',function($name,$nachname){
 Route::get('/user/{name?}',function($name=null){
     return "Name=".$name;
 })->name('nickname');
+
+
+
+use App\Http\Controllers\MeetingController;
+Route::resource('/meetings',MeetingController::class)
+//->except(['index']) // auschluss verschiedener route
+//->names(['edit' => 'aendern']) // nachträgliches aendern der vorgegebenen nicknames
+;
+
+/*
+  GET|HEAD        meetings ............................................. meetings.index › MeetingController@index
+  POST            meetings ............................................. meetings.store › MeetingController@store
+  GET|HEAD        meetings/create .................................... meetings.create › MeetingController@create
+  GET|HEAD        meetings/{meeting} ..................................... meetings.show › MeetingController@show
+  PUT|PATCH       meetings/{meeting} ................................. meetings.update › MeetingController@update
+  DELETE          meetings/{meeting} ............................... meetings.destroy › MeetingController@destroy  
+  GET|HEAD        meetings/{meeting}/edit ................................ meetings.edit › MeetingController@edit  
+  */
