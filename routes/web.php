@@ -14,83 +14,84 @@ use App\Http\Controllers\MeetingController;
 |
 */
 
-//Route::redirect("/","/download_pdf");
+Route::get("/",fn() => view("/welcome"));
 
-Class Daten {
+class Daten
+{
 	public $x;
 	public $y;
-	
+
 }
-Route::get("/jsonOutput",function (){
- $data =new Daten();
- $data->x=1;
- $data->y=2;
+Route::get("/jsonOutput", function () {
+	$data    = new Daten();
+	$data->x = 1;
+	$data->y = 2;
 
 	return response()->json($data);
 });
 
-Route::get("/zurInternerRoutePerNickname",function(){
+Route::get("/zurInternerRoutePerNickname", function () {
 
 	return redirect()->route("hello"); // named route per nickname umleitung
 });
 
-Route::get("/zurControllerAction",function(){
+Route::get("/zurControllerAction", function () {
 
 	return redirect()->action("TestController@printMessage"); // interner Controller zu einer action, also einer Methode des Controllers
 });
 
-Route::get("/zurExternenUmleitungGfn",function(){
+Route::get("/zurExternenUmleitungGfn", function () {
 
 	return redirect()->away("https://gfn.de"); // externe Seite
 });
 
 
 
-Route::get("/file_pdf",function(){
+Route::get("/file_pdf", function () {
 
 	return response()->file("bild.pdf");
 });
 
-Route::get("/file_bild",function(){
+Route::get("/file_bild", function () {
 
 	return response()->file("bild.jpg");
 });
 
 
 
-Route::get("/download_pdf",function(){
+Route::get("/download_pdf", function () {
 
-	return response()->download("bild.pdf","2023_09_27_ihr_bild.pdf");//->deleteFileAfterSend();
+	return response()->download("bild.pdf", "2023_09_27_ihr_bild.pdf"); //->deleteFileAfterSend();
 });
 
-Route::get("/download_bild",function(){
+Route::get("/download_bild", function () {
 
-	return response()->download("bild.jpg","2023_09_27_ihr_bild.jpg");//->deleteFileAfterSend();
+	return response()->download("bild.jpg", "2023_09_27_ihr_bild.jpg"); //->deleteFileAfterSend();
 });
 
 
 
-Route::get('/status_aenderung', function ( Request $request                 ) {
+Route::get('/status_aenderung', function (Request $request) {
 
-	$str= "<html><head></head><body>";
-	$str.="Wir sind in Wartung! Status sollte 503 sein!";
-	$str.=  "</body></html>" ;
-    
-	return response($str, 503   ); // Service not available
+	$str = "<html><head></head><body>";
+	$str .= "Wir sind in Wartung! Status sollte 503 sein!";
+	$str .= "</body></html>";
+
+	return response($str, 503); // Service not available
 	// oder über vordefinierte Konstante
 	//return response($str, \Symfony\Component\HttpFoundation\Response::HTTP_SERVICE_UNAVAILABLE   ); // Service not available
 });
 
 
 /* 
-    uebung_01
+	uebung_01
 
-    eine GET-Route 
-    URL: http://routinglaravel.test/helloworld
+	eine GET-Route 
+	URL: http://routinglaravel.test/helloworld
 
 */
 Route::get('/helloworld', function () {
-    return "Hallo Welt, wie geht es Dir?";
+	return "Hallo Welt, wie geht es Dir?";
 });
 
 /* 
@@ -100,9 +101,9 @@ Route::get('/helloworld', function () {
 	URL: http://routinglaravel.test/name/jens/nachname/simon
 	URL: http://routinglaravel.test/name/kim/nachname/schmitz
 	
-*/ 
-Route::get('/name/{name}/nachname/{nachname}',function($name,$nachname){
-    return "Der übergebene Name lautet: ".$name." ".$nachname;
+*/
+Route::get('/name/{name}/nachname/{nachname}', function ($name, $nachname) {
+	return "Der übergebene Name lautet: " . $name . " " . $nachname;
 });
 
 /* 
@@ -119,16 +120,16 @@ Route::get('/name/{name}/nachname/{nachname}',function($name,$nachname){
 	anzeige aller routes ueber das Terminal mit:
 	
 	php artisan route:list
-*/ 
-Route::get('/user/{name?}',function($name=null){
-    return "Name=".$name;
+*/
+Route::get('/user/{name?}', function ($name = null) {
+	return "Name=" . $name;
 })->name('nickname');
 
 
 
 
-Route::resource('/meetings',MeetingController::class)
-//->except(['index']) // auschluss verschiedener route
+Route::resource('/meetings', MeetingController::class)
+	//->except(['index']) // auschluss verschiedener route
 //->names(['edit' => 'aendern']) // nachträgliches aendern der vorgegebenen nicknames
 ;
 
@@ -142,29 +143,30 @@ Route::resource('/meetings',MeetingController::class)
   GET|HEAD        meetings/{meeting}/edit ................................ meetings.edit › MeetingController@edit  
   */
 
-  /* 
-	// uebung_04
-	
-	zuerst muss der Controller erstellt werden, erst dann kann die route diesen benutzen!
+/* 
+  // uebung_04
+  
+  zuerst muss der Controller erstellt werden, erst dann kann die route diesen benutzen!
 
-	eine GET-Route 
-	URL: http://routinglaravel.test/helloworld2
-	
-	Der Output kommt nun nicht mehr aus einer Closure von dieser Datei (function(){ return 'output';}
-	
-	Sondern ueber eine Umleitung zur Methode des Controllers!
+  eine GET-Route 
+  URL: http://routinglaravel.test/helloworld2
+  
+  Der Output kommt nun nicht mehr aus einer Closure von dieser Datei (function(){ return 'output';}
+  
+  Sondern ueber eine Umleitung zur Methode des Controllers!
 
-	
-	php artisan route:list
+  
+  php artisan route:list
 
-	
-	*/ 
+  
+  */
 // bis L7
 //Route::get('/helloworld2','TestController@printMessage');
 
 // ab L8
-use  App\Http\Controllers\TestController;
-Route::get('/helloworld2',[TestController::class,"printMessage"])->name("hello");
+use App\Http\Controllers\TestController;
+
+Route::get('/helloworld2', [TestController::class, "printMessage"])->name("hello");
 
 /* 
 	uebung_05
@@ -178,12 +180,12 @@ Route::get('/helloworld2',[TestController::class,"printMessage"])->name("hello")
 		 http://routinglaravel.test/name/nachname/
 		 http://routinglaravel.test/name/jens/nachname/
 		 http://routinglaravel.test/name/jens/nachname
-		 	 
+			  
 		 
 	URL: http://routinglaravel.test/user/jens
 		 http://routinglaravel.test/user/
 		 http://routinglaravel.test/user
-*/ 
+*/
 
 // bis L7
 // Route::get('/name/{name}/nachname/{nachname}','TestController@showName');	
@@ -191,8 +193,8 @@ Route::get('/helloworld2',[TestController::class,"printMessage"])->name("hello")
 
 // ab L8
 
-Route::get('/name/{name}/nachname/{nachname}',[TestController::class,'showName']);	
-Route::get('/user/{name?}',[TestController::class,'showUsername']);
+Route::get('/name/{name}/nachname/{nachname}', [TestController::class, 'showName']);
+Route::get('/user/{name?}', [TestController::class, 'showUsername']);
 
 /* 
 	uebung_06
@@ -213,13 +215,13 @@ Route::get('/user/{name?}',[TestController::class,'showUsername']);
 			http://routinglaravel.test/certificates/create 
 			http://routinglaravel.test/certificates/123      show mit einer id kann auch text sein!?  
 			http://routinglaravel.test/certificates/abc
-	*/ 
+	*/
 
 // bis L7	
-Route::resource('certificates','CertificateController')
-->except(['index','edit','update']) // ausser - blacklisting
+Route::resource('certificates', 'CertificateController')
+	->except(['index', 'edit', 'update']) // ausser - blacklisting
 //->only('store','create','show','destroy') // nur - whitelisting 
-->names(['create' => 'certifikates.certify']);
+	->names(['create' => 'certifikates.certify']);
 
 // ab L8
 /*use  App\Http\Controllers\CertificateController;
@@ -227,4 +229,3 @@ Route::resource('certificates',CertificateController::class)
 ->except(['index','edit','update'])
 //->only('store','create','show','destroy') // nur - whitelisting 
 ->names(['create' => 'certifikates.certify']);*/
-
