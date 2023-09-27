@@ -131,3 +131,37 @@ Route::get('/helloworld2',[TestController::class,"printMessage"]);
 Route::get('/name/{name}/nachname/{nachname}',[TestController::class,'showName']);	
 Route::get('/user/{name?}',[TestController::class,'showUsername']);
 
+/* 
+	uebung_06
+	
+	zuerst den Controller mit:
+
+	php artisan make:controller CertificateController --resource
+	
+	erstellen!
+	
+	dann muessen die beiden Methoden im Controller nach Wunsch auscodiert werden!
+	
+	dann die routen setzen, alle auf einen Schlag, mit Ausnahmen und mit alias fuer 'create'
+	
+	php artisan route:list
+	
+	URL:
+			http://routinglaravel.test/certificates/create 
+			http://routinglaravel.test/certificates/123      show mit einer id kann auch text sein!?  
+			http://routinglaravel.test/certificates/abc
+	*/ 
+
+// bis L7	
+Route::resource('certificates','CertificateController')
+->except(['index','edit','update']) // ausser - blacklisting
+//->only('store','create','show','destroy') // nur - whitelisting 
+->names(['create' => 'certifikates.certify']);
+
+// ab L8
+/*use  App\Http\Controllers\CertificateController;
+Route::resource('certificates',CertificateController::class)
+->except(['index','edit','update'])
+//->only('store','create','show','destroy') // nur - whitelisting 
+->names(['create' => 'certifikates.certify']);*/
+
