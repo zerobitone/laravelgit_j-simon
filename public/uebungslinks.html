@@ -42,8 +42,23 @@
     <h3>Übung 6</h3>
     <a href="/certificates/create">/certificates/create</a><br>
     <a href="/certificates/113">/certificates/113 mit einer Zahl 113 als $id</a><br>
-    <a href="/certificates/abc">/certificates/abc mit einem Text abc als $id</a><br>
+    <a href="/certificates/abc">/certificates/abc mit einem Text abc als $id</a><br><br>
     
+    <h3>Übung 7</h3><br>
+    <h5>Anforderung 4: Wenn die »question« sowie die »id« vorhanden sind, soll ein kleiner individueller Text wiedergegeben werden. Dieser soll bestätigen, dass die Frage gespeichert wurde. Der Statuscode soll 200 sein.</h5>
+    <a href="/question?question=Warum%20ist%20die%20Erde%20rund?&id=3&file=false">/question?question=Warum%20ist%20die%20Erde%20rund?&id=3&file=false</a><br>
+   
+    <h5>Anforderung 1:  Wenn keine »id« vorhanden ist oder die »id« null(leer) ist, soll eine Fehlermeldung mit einem HTTP-Statuscode 404 zurückgegeben werden.</h5>
+    <a href="/question?question=Warum%20ist%20die%20Erde%20rund?">/question?question=Warum%20ist%20die%20Erde%20rund?</a><br>
+    <a href="/question?id=&question=Warum%20ist%20die%20Erde%20rund?">/question?id=&question=Warum%20ist%20die%20Erde%20rund?</a><br>
+   
+    <h5>Anforderung 2: Wenn der Parameter »file« true ist, also nicht null oder false, soll das Bild Success.png heruntergeladen werden. Der Name der Datei soll der Wert des »id«-Parameters + die Endung .png sein. Die Parameter »question« und »id« dürfen ebenfalls nicht null sein.</h5>
+    <a href="/question?question=Warum%20ist%20die%20Erde%20rund?&id=3&file=true">/question?question=Warum%20ist%20die%20Erde%20rund?&id=3&file=true</a><br>
+   
+    <h5>Anforderung 3: Wenn die »question« nicht vorhanden ist, soll auf die Seite der Akademie "https://www.webmasters-fernakademie.de/" weitergeleitet werden. Die »id« soll aber vorhanden sein.</h5>
+    <a href="/question?id=3&file=false">/question?id=3&file=false</a>   
+
+
 </body>
 
 </html>
