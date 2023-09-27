@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MeetingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +14,71 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Route::redirect("/","/download_pdf");
 
-Route::get('/', function () {
-    return view('welcome');
+Class Daten {
+	public $x;
+	public $y;
+	
+}
+Route::get("/jsonOutput",function (){
+ $data =new Daten();
+ $data->x=1;
+ $data->y=2;
+
+	return response()->json($data);
+});
+
+Route::get("/zurInternerRoutePerNickname",function(){
+
+	return redirect()->route("hello"); // named route per nickname umleitung
+});
+
+Route::get("/zurControllerAction",function(){
+
+	return redirect()->action("TestController@printMessage"); // interner Controller zu einer action, also einer Methode des Controllers
+});
+
+Route::get("/zurExternenUmleitungGfn",function(){
+
+	return redirect()->away("https://gfn.de"); // externe Seite
+});
+
+
+
+Route::get("/file_pdf",function(){
+
+	return response()->file("bild.pdf");
+});
+
+Route::get("/file_bild",function(){
+
+	return response()->file("bild.jpg");
+});
+
+
+
+Route::get("/download_pdf",function(){
+
+	return response()->download("bild.pdf","2023_09_27_ihr_bild.pdf");//->deleteFileAfterSend();
+});
+
+Route::get("/download_bild",function(){
+
+	return response()->download("bild.jpg","2023_09_27_ihr_bild.jpg");//->deleteFileAfterSend();
+});
+
+
+
+Route::get('/status_aenderung', function ( Request $request                 ) {
+
+	$str= "<html><head></head><body>";
+	$str.="Wir sind in Wartung! Status sollte 503 sein!";
+	$str.=  "</body></html>" ;
+    
+	return response($str, 503   ); // Service not available
+	// oder über vordefinierte Konstante
+	//return response($str, \Symfony\Component\HttpFoundation\Response::HTTP_SERVICE_UNAVAILABLE   ); // Service not available
 });
 
 
@@ -63,7 +126,7 @@ Route::get('/user/{name?}',function($name=null){
 
 
 
-use App\Http\Controllers\MeetingController;
+
 Route::resource('/meetings',MeetingController::class)
 //->except(['index']) // auschluss verschiedener route
 //->names(['edit' => 'aendern']) // nachträgliches aendern der vorgegebenen nicknames
@@ -101,7 +164,7 @@ Route::resource('/meetings',MeetingController::class)
 
 // ab L8
 use  App\Http\Controllers\TestController;
-Route::get('/helloworld2',[TestController::class,"printMessage"]);
+Route::get('/helloworld2',[TestController::class,"printMessage"])->name("hello");
 
 /* 
 	uebung_05

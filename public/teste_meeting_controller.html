@@ -27,11 +27,35 @@
       <input type="submit">destroy - Action wird getestet
     </form>
 
-    <form action="meetings/12" method="POST"> <!-- bei show falsch gelandet!-->
+  
+    <p>hier testen wir die Request Inhalte!</p>
+    <form action="meetings/12?zusatzinfo=hallo" method="POST"> <!-- bei show falsch gelandet!-->
     
       <input type="hidden" name="_method" value="PUT">
+      Titel des Meeting<input type="text" name="titel"><br>
+      Uhrzeit des Meeting<input type="text" name="uhrzeit"><br>
+     
       <input type="submit">update - Action wird getestet
     </form>
+
+    <h3>Response Manipulationen</h3>
+    <a href="/status_aenderung">Ein Response mit Statusänderung - hier Text mit 503 </a>bitte den Statuscode in der Browser-Netzwerkanalyse prüfen!<br><br>
+    <a href="/download_pdf">Download pdf-Dokument aus dem public-Ordner mit umbenennen</a><br>
+    <a href="/download_bild">Download Bild aus dem public-Ordner mit umbenennen</a><br><br>
+    Nachfolgende einblende Links funktionieren nur wenn der Broser das erlaubt!<br>
+    <a href="/file_pdf">Einblenden einses pdf-Dokument aus dem public-Ordner</a><br>
+    <a href="/file_bild">Einblenden eines Bild aus dem public-Ordner</a><br><br>
+    Umleitungen<br>
+    <a href="/zurExternenUmleitungGfn">Umleitung nach extern z.B. https://gfn.de</a><br>
+    <a href="/zurControllerAction">Umleitung nach intern auf eine Controller-Action also auf eine Methode</a><br>
+    <a href="/zurInternerRoutePerNickname">Umleitung nach intern auf ein andere Route</a><br><br>
+    Spezieller JSON-Output für REST-API Systeme, oder auch für JavaScript fetch()-Ajax<br>
+    <a href="/jsonOutput">Sende JSON Daten aus</a><br>
+    <br><br>
+    Immer alles mit <br><b>php artisan route:list</b><br> überprüfen UND öfter mit<br>
+    <b>php artisan route:clear</b><br> die gecachten Routen löschen!
+
+
 
 <!--
   GET|HEAD        meetings ............................................. meetings.index › MeetingController@index
