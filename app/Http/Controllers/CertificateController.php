@@ -16,6 +16,7 @@ class CertificateController extends Controller
     public function index()
     {
         //
+        return "Die Übersicht aller Zertifikate";
     }
 
     /**
@@ -26,7 +27,9 @@ class CertificateController extends Controller
     public function create()
     {
        // uebung_06
-       return "Zertifikat erstellen";
+       //return "Zertifikat erstellen";
+       // uebung_08
+       return view('certificate.create');//"Zertifikat erstellen";
     }
 
     /**
