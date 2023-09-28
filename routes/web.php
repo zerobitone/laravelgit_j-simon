@@ -43,6 +43,97 @@ Route::get("/datenview2", function () {
 });
 
 
+// blade
+
+// 1.
+Route::get("/bladeview1a", function () {
+	// Datenübergabe  1. a) assoziatives Array mit einem einfachen Wert
+	$daten = ['user' => '<h5>Jens</h5>'];
+	return view('blade_unterricht.variablen_uebergabe.bladeview1a', $daten);
+});
+
+Route::get("/bladeview1b", function () {
+	// Datenübergabe  1. b) assoziatives Array mit mehren Werten
+	$daten = ['user' => 'Jens', 'password' => 'pssst_geheim'];
+	return view('blade_unterricht.variablen_uebergabe.bladeview1b', $daten);
+});
+
+Route::get("/bladeview1c", function () {
+	// Datenübergabe  1. c) assoziatives Array mit einem mehrfach Wert
+	$daten = ['users' => ['Jens', 'Tim', 'Tom']];
+	return view('blade_unterricht.variablen_uebergabe.bladeview1c', $daten);
+});
+
+// 2.
+Route::get("/bladeview2", function () {
+	// Datenübergabe  2. wie  1. a)
+	$vorname = "Jens";
+	$daten   = ['user' => $vorname];
+	return view('blade_unterricht.variablen_uebergabe.bladeview1a', $daten);
+});
+
+// 3.
+Route::get("/bladeview3a", function () {
+	// Datenübergabe  3. a) with()-Methode mit 2 Parametern
+	$user = '<h5>Jens</h5>';
+	return view('blade_unterricht.variablen_uebergabe.bladeview1a')->with('user', $user);
+});
+
+Route::get("/bladeview3b", function () {
+	// Datenübergabe  3. b) with()-Methode mit assoziativem Array
+	$daten = ['user' => 'Jens', 'password' => 'pssst_geheim'];
+	return view('blade_unterricht.variablen_uebergabe.bladeview1b')->with($daten);
+});
+
+Route::get("/bladeview3c", function () {
+	// Datenübergabe  3. c) witUser()-Methode mit einem Argument
+	$user = '<h5>Jens</h5>';
+	return view('blade_unterricht.variablen_uebergabe.bladeview1a')->withUser($user);
+});
+
+// 4.
+Route::get("/bladeview4a", function () {
+	// Datenübergabe  4. a) einfacher Wert
+	$user = 'Jens';
+	return view('blade_unterricht.variablen_uebergabe.bladeview1a', compact('user'));
+});
+
+Route::get("/bladeview4b", function () {
+	// Datenübergabe  4. b) mehrer einfache Werte
+	$user     = 'Jens';
+	$password = "pssst_geheim";
+	return view('blade_unterricht.variablen_uebergabe.bladeview1b', compact('user', 'password'));
+});
+
+Route::get("/bladeview4c", function () {
+	// Datenübergabe  4. c)  Array 
+	$users = ['Jens', 'Tim', 'Tom'];
+	return view('blade_unterricht.variablen_uebergabe.bladeview1c', compact('users'));
+});
+
+Route::get("/bladeview5", function () {
+	// Datenübergabe  5. c)  Array mit Array 
+	$users = [
+		[
+			'name' => 'Jens Simon',
+			'email' => 'jens.simon@gmx.net',
+			'phone' => '01xx-12345678',
+			'age' => '42',
+		],
+		[
+			'name' => 'Tim Schmitz',
+			'email' => 'tim@schmitz.com',
+			'phone' => '0123-12406086',
+			'age' => '23',
+		],
+	];
+	dump($users);
+	return view('blade_unterricht.variablen_uebergabe.bladeview5', compact('users'));
+	/*$inhalt = view('blade_unterricht.variablen_uebergabe.bladeview5', compact('users'));
+	dump($inhalt);
+	dd($inhalt->render());*/
+});
+
 Route::get("/", fn() => view("welcome", []));
 
 class Daten
