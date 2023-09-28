@@ -338,7 +338,7 @@ Route::get('/user/{name?}', [TestController::class, 'showUsername']);
 	*/
 
 // bis L7	
-Route::resource('urkunden', 'CertificateController')
+Route::resource('certificates', 'CertificateController')
 //	->except(['index', 'edit', 'update']) // ausser - blacklisting
 //->only('store','create','show','destroy') // nur - whitelisting 
 	->names(['index' => 'index']);
