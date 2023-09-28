@@ -14,7 +14,36 @@ use App\Http\Controllers\MeetingController;
 |
 */
 
-Route::get("/",fn() => view("/welcome"));
+
+Route::get("/datenview", function () {
+	$daten = [
+		'vorname' => 'jens',
+		'nachname' => 'simon'
+	];
+
+
+	return view("datenview", $daten); // resourced/views/datenview.blade.php
+
+});
+
+
+
+Route::get("/datenview2", function () {
+	$daten = [
+		'vornamen' => [
+			'<div style="color:red">jens</div>',
+			'tim', 
+			'anne'
+		]
+	];
+
+
+	return view("datenview2", $daten); // resourced/views/datenview.blade.php
+
+});
+
+
+Route::get("/", fn() => view("welcome", []));
 
 class Daten
 {
@@ -266,11 +295,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 
 Route::get('question', function (Request $request) {
-	
-	if (!$request->filled('id')) { // keine id oder id ist null
-		echo "id=".$request->id;
 
-		return response('Ein Fehler ist aufgetreten, da keine id übergeben wurde', 404);//Response::HTTP_NOT_FOUND);
+	if (!$request->filled('id')) { // keine id oder id ist null
+		echo "id=" . $request->id;
+
+		return response('Ein Fehler ist aufgetreten, da keine id übergeben wurde', 404); //Response::HTTP_NOT_FOUND);
 
 	} elseif ($request->filled(['id', 'question']) && $request->file === "true") { // id, question file=true 
 
@@ -286,11 +315,11 @@ Route::get('question', function (Request $request) {
 
 	} elseif ($request->filled(['id', 'question']) && $request->file !== "true") { // id,question, file=false 
 
-		return "Ihre Frage wurde erfolgreich gespeichert.";	
+		return "Ihre Frage wurde erfolgreich gespeichert.";
 		/*return response()->json([
-			'art' => "antwort",
-			'inhalt' => 'Ihre Frage wurde erfolgreich gespeichert.'
-		]);*/
+						'art' => "antwort",
+						'inhalt' => 'Ihre Frage wurde erfolgreich gespeichert.'
+					]);*/
 	}
 
 });
