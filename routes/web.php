@@ -15,16 +15,6 @@ use App\Http\Controllers\MeetingController;
 */
 
 
-Route::get("/datenview", function () {
-	$daten = [
-		'vorname' => 'jens',
-		'nachname' => 'simon'
-	];
-
-
-	return view("datenview", $daten); // resourced/views/datenview.blade.php
-
-});
 
 
 
@@ -32,7 +22,7 @@ Route::get("/datenview2", function () {
 	$daten = [
 		'vornamen' => [
 			'<div style="color:red">jens</div>',
-			'tim', 
+			'tim',
 			'anne'
 		]
 	];
@@ -130,8 +120,8 @@ Route::get("/bladeview5", function () {
 	dump($users);
 	return view('blade_unterricht.variablen_uebergabe.bladeview5', compact('users'));
 	/*$inhalt = view('blade_unterricht.variablen_uebergabe.bladeview5', compact('users'));
-	dump($inhalt);
-	dd($inhalt->render());*/
+	   dump($inhalt);
+	   dd($inhalt->render());*/
 });
 
 Route::get("/", fn() => view("welcome", []));
@@ -316,6 +306,36 @@ Route::get('/helloworld2', [TestController::class, "printMessage"])->name("hello
 Route::get('/name/{name}/nachname/{nachname}', [TestController::class, 'showName']);
 Route::get('/user/{name?}', [TestController::class, 'showUsername']);
 
+/* uebung_09
+  sollte vor der resource-Route-Methode kommen!!!
+*/
+use App\Http\Controllers\CertificateController;
+
+// bis L7
+//Route::get('names','CertificateController@nameList');
+
+// ab L8
+Route::get('names', [CertificateController::class, "nameList"]);
+
+Route::get("/datenview", function () {
+	$daten = [
+		'vorname' => 'jens',
+		'nachname' => 'simon'
+	];
+
+
+	return view("datenview", $daten); // resourced/views/datenview.blade.php
+
+});
+
+// uebung_11
+// /users
+// sollte vor den resource-Route kommen!!!
+// bis L7
+//Route::get('users','CertificateController@showUser');
+// ab L8
+Route::get('users', [CertificateController::class, "showUser"]);
+
 /* 
 	uebung_06
 	
@@ -339,12 +359,12 @@ Route::get('/user/{name?}', [TestController::class, 'showUsername']);
 
 // bis L7	
 Route::resource('certificates', 'CertificateController')
-//	->except(['index', 'edit', 'update']) // ausser - blacklisting
+	//	->except(['index', 'edit', 'update']) // ausser - blacklisting
 //->only('store','create','show','destroy') // nur - whitelisting 
 	->names(['index' => 'index']);
 
 // ab L8
-/*use  App\Http\Controllers\CertificateController;
+/*
 Route::resource('certificates',CertificateController::class)
 ->except(['index','edit','update'])
 //->only('store','create','show','destroy') // nur - whitelisting 
@@ -408,9 +428,20 @@ Route::get('question', function (Request $request) {
 
 		return "Ihre Frage wurde erfolgreich gespeichert.";
 		/*return response()->json([
-						'art' => "antwort",
-						'inhalt' => 'Ihre Frage wurde erfolgreich gespeichert.'
-					]);*/
+							  'art' => "antwort",
+							  'inhalt' => 'Ihre Frage wurde erfolgreich gespeichert.'
+						  ]);*/
 	}
 
+});
+
+
+
+
+// Template inheritance
+Route::get("/home", function () {
+ 	return view("home");
+});
+Route::get(	"/impressum",function () {
+	return view("impressum");
 });
