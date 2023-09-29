@@ -445,3 +445,11 @@ Route::get("/home", function () {
 Route::get(	"/impressum",function () {
 	return view("impressum");
 });
+
+// uebung_12
+// /users
+// sollte vor den resource-Route kommen!!!
+// bis L7
+//Route::get('users','CertificateController@showUser');
+// ab L8
+Route::get('users_uebung12', [CertificateController::class, "showUserUebung12"]);
