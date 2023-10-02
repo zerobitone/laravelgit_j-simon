@@ -12,21 +12,26 @@ class InterestController extends Controller
     public function index()
     {
         echo "index";
+        
+
+        $interests = DB::select('select * from interests ');
+        dump($interests);
+        foreach($interests as $interest)
+            var_dump($interest);
+
+   
+        /*
         dump(DB::table('interests')->dump());
         //dump(DB::table('interests')->dd());
         //dump(DB::table('interests')->toSql());
         $interests = DB::table('interests');
         dump($interests);
+        */
         /*$interests->insert(
             ['text' => 'test']
         );
         $interests->get();
         dump($interests->get());*/
-
-        $interests = DB::select('select * from interests ');
-         dump($interests);
-        foreach($interests as $interest)
-        var_dump($interest);
     }
 
     public function create($id, $text)
@@ -40,7 +45,10 @@ class InterestController extends Controller
 
     public function delete($id)
     {
-        $removed = DB::delete('delete from interests where id = ?', [$id]);
+        DB::listen(function ($sql) {
+            dump($sql);
+        });
+        $removed = DB::delete('DELETE FROM interests where id = ?', [$id]);
         return dd($removed);
     }
 }
