@@ -720,7 +720,7 @@ Route::get("teste_posts_interests_query_builder_methoden", function () {
 	$posts = $posts->get(); // SELECT id,titel,text FROM posts;
 	dump($posts);
 	foreach($posts as $post){
-      echo $post->title."<br>"; //Collection
+      echo $post->title."<br>"; 
 	}
 
 	$posts=$post_temp->first();
