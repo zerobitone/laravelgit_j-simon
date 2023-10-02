@@ -391,7 +391,9 @@
 </head>
 
 <body class="antialiased">
-
+    <x-MeldungComponent/>
+    <x-MeldungComponent2/>
+    <x-komponente  class="fett"  farbe="rot" text="guten tag"/>
     <div>
         auf Docker unter Windows<br>
 

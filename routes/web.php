@@ -120,8 +120,8 @@ Route::get("/bladeview5", function () {
 	dump($users);
 	return view('blade_unterricht.variablen_uebergabe.bladeview5', compact('users'));
 	/*$inhalt = view('blade_unterricht.variablen_uebergabe.bladeview5', compact('users'));
-	   dump($inhalt);
-	   dd($inhalt->render());*/
+		  dump($inhalt);
+		  dd($inhalt->render());*/
 });
 
 Route::get("/", fn() => view("welcome", []));
@@ -428,9 +428,9 @@ Route::get('question', function (Request $request) {
 
 		return "Ihre Frage wurde erfolgreich gespeichert.";
 		/*return response()->json([
-							  'art' => "antwort",
-							  'inhalt' => 'Ihre Frage wurde erfolgreich gespeichert.'
-						  ]);*/
+									'art' => "antwort",
+									'inhalt' => 'Ihre Frage wurde erfolgreich gespeichert.'
+								]);*/
 	}
 
 });
@@ -440,9 +440,9 @@ Route::get('question', function (Request $request) {
 
 // Template inheritance
 Route::get("/home", function () {
- 	return view("home");
+	return view("home");
 });
-Route::get(	"/impressum",function () {
+Route::get("/impressum", function () {
 	return view("impressum");
 });
 
@@ -455,3 +455,73 @@ Route::get(	"/impressum",function () {
 Route::get('users_uebung12', [CertificateController::class, "showUserUebung12"]);
 
 //
+
+/*
+Route::get('interests','InterestController@index');
+Route::get('interests/create/{id}/{text}','InterestController@create');
+Route::get('interests/delete/{id}','InterestController@delete');
+
+*/
+
+use Illuminate\Support\Facades\DB;
+Route::get("/raw_test_delete/{id}", function ($id) {
+	echo "start delete ";
+	DB::delete("DELETE FROM interests WHERE id = ?",[$id]);
+	echo "ende delete ";
+});
+
+Route::get("/raw_test_update/{id}", function ($id) {
+	echo "start update ";
+	DB::delete("UPDATE interests SET text='updated' WHERE id = ?",[$id]);
+	echo "ende update ";
+});
+
+Route::get("/raw_test_select", function () {
+	echo "start select ";
+	$daten = DB::select('SELECT * FROM interests;');
+	dump($daten);
+	foreach($daten as $data) // $data - Objekt
+	//print_r($data);
+
+		echo $data->id." - " .$data->text." - ".($data->created_at ?:"leer")." - "."<br>";
+
+	echo "ende select ";
+}
+);
+
+Route::get("/raw_test_insert", function () {
+
+	echo "start insert ";
+
+	/*DB::insert('INSERT INTO interests (id, text) VALUES (:id,:text)',
+	 [
+		'id' => '17', 
+		'text' => 'PHP'
+	]);
+
+	DB::insert('INSERT INTO interests (id, text) VALUES (:id,:text)',
+	 [
+		'id' => '18', 
+		'text' => 'Pause'
+	]);
+*/
+	DB::insert('INSERT INTO interests (text, created_at) VALUES (:text, :created_at)',
+	 [
+	
+		'text' => 'Ohne PK ID',
+		'created_at' => 'NOW()' //now() // Webserver
+	]);
+
+	/*$daten = [
+		['8', "c"],
+		['9', "d"]
+	];
+	//DB::insert('INSERT INTO interests (id, text) VALUES (?,?,?)', ['1',"Coding"]);
+	foreach ($daten as $data) 
+		DB::insert('INSERT INTO interests (id, text) VALUES (?,?)', $data); 
+	
+			 INSERT			 INTO interests (id,text) 			 VALUES			 (4,"SQL"),			 (5,"PHP");
+	echo "ende insert";
+	*/
+
+});
