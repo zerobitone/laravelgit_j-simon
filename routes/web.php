@@ -737,3 +737,5 @@ Route::get("teste_posts_interests_query_builder_methoden", function () {
 	->where('id',2)
 	->delete();
 });
+
+//
