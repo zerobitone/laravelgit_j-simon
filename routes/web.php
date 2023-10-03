@@ -120,8 +120,8 @@ Route::get("/bladeview5", function () {
 	dump($users);
 	return view('blade_unterricht.variablen_uebergabe.bladeview5', compact('users'));
 	/*$inhalt = view('blade_unterricht.variablen_uebergabe.bladeview5', compact('users'));
-				dump($inhalt);
-				dd($inhalt->render());*/
+							dump($inhalt);
+							dd($inhalt->render());*/
 });
 
 Route::get("/", fn() => view("welcome", []));
@@ -428,9 +428,9 @@ Route::get('question', function (Request $request) {
 
 		return "Ihre Frage wurde erfolgreich gespeichert.";
 		/*return response()->json([
-												'art' => "antwort",
-												'inhalt' => 'Ihre Frage wurde erfolgreich gespeichert.'
-											]);*/
+																		'art' => "antwort",
+																		'inhalt' => 'Ihre Frage wurde erfolgreich gespeichert.'
+																	]);*/
 	}
 
 });
@@ -501,17 +501,17 @@ Route::get("/raw_test_insert", function () {
 	echo "start insert ";
 
 	/*DB::insert('INSERT INTO interests (id, text) VALUES (:id,:text)',
-		   [
-			  'id' => '17', 
-			  'text' => 'PHP'
-		  ]);
+					   [
+						  'id' => '17', 
+						  'text' => 'PHP'
+					  ]);
 
-		  DB::insert('INSERT INTO interests (id, text) VALUES (:id,:text)',
-		   [
-			  'id' => '18', 
-			  'text' => 'Pause'
-		  ]);
-	  */
+					  DB::insert('INSERT INTO interests (id, text) VALUES (:id,:text)',
+					   [
+						  'id' => '18', 
+						  'text' => 'Pause'
+					  ]);
+				  */
 	DB::insert(
 		'INSERT INTO interests (text, created_at) VALUES (:text, :created_at)',
 		[
@@ -522,16 +522,16 @@ Route::get("/raw_test_insert", function () {
 	);
 
 	/*$daten = [
-			  ['8', "c"],
-			  ['9', "d"]
-		  ];
-		  //DB::insert('INSERT INTO interests (id, text) VALUES (?,?,?)', ['1',"Coding"]);
-		  foreach ($daten as $data) 
-			  DB::insert('INSERT INTO interests (id, text) VALUES (?,?)', $data); 
-		  
-				   INSERT			 INTO interests (id,text) 			 VALUES			 (4,"SQL"),			 (5,"PHP");
-		  echo "ende insert";
-		  */
+						  ['8', "c"],
+						  ['9', "d"]
+					  ];
+					  //DB::insert('INSERT INTO interests (id, text) VALUES (?,?,?)', ['1',"Coding"]);
+					  foreach ($daten as $data) 
+						  DB::insert('INSERT INTO interests (id, text) VALUES (?,?)', $data); 
+					  
+							   INSERT			 INTO interests (id,text) 			 VALUES			 (4,"SQL"),			 (5,"PHP");
+					  echo "ende insert";
+					  */
 
 });
 /* 
@@ -581,9 +581,14 @@ Route::get('uebung_18_daten_installieren', function () {
 
 	foreach ($interestdata as $interest) {
 		$interest = (object) $interest;
-		DB::table('interests')->insert(
-			['text' => $interest->text, 'id' => $interest->id]
-		);
+		try {
+			DB::table('interests')->insert(
+				['text' => $interest->text, 'id' => $interest->id]
+			);
+		} catch (\Illuminate\Database\QueryException $ex) {
+			echo "<br>Ein Fehler ist aufgetreten: " . $ex->getMessage();
+		}
+
 	}
 
 	$postdata = [
@@ -658,18 +663,33 @@ Route::get('uebung_18_daten_installieren', function () {
 	foreach ($postdata as $post) {
 		$post = (object) $post;
 
-		DB::table('posts')->insert(
-			[
-				'id' => $post->id,
-				'title' => $post->title,
-				'text' => $post->text,
-				'interest_id' => $post->interest_id,
-				'created_at' => \Carbon\Carbon::now(),
-				'updated_at' => \Carbon\Carbon::now(),
-			]
-		);
+		try {
+			DB::table('posts')->insert(
+				[
+					'id' => $post->id,
+					'title' => $post->title,
+					'text' => $post->text,
+					'interest_id' => $post->interest_id,
+					'created_at' => \Carbon\Carbon::now(),
+					'updated_at' => \Carbon\Carbon::now(),
+				]
+			);
+		} catch (\Illuminate\Database\QueryException $ex) {
+			echo "<br>Ein Fehler ist aufgetreten: " . $ex->getMessage();
+		}
+
 	}
-	return "Wenn keine Fehler aufgetaucht sind, sind die Tabellen jetzt gefüllt!";
+
+	$interests = DB::select('select * from interests ');
+	echo "<br><br>Ausgabe der kompletten interests Tabelle<br>"; // Ausgabe aller Felder
+	foreach ($interests as $interest) echo $interest->id . ", " . $interest->text . ", " . ($interest->created_at ?: "null") . ", " . ($interest->updated_at ?: "null") . "<br>";
+
+	$posts = DB::select('select * from posts');
+	echo "<br><br>Ausgabe der kompletten posts Tabelle<br>"; // Ausgabe aller Felder
+	foreach ($posts as $post) echo $post->id . ", " . $post->text . ", " . ($post->created_at ?: "null") . ", " . ($post->updated_at ?: "null") . "<br>";
+
+
+	return "<br><h2>Wenn keine Fehler aufgetaucht sind, sind die Tabellen jetzt gefüllt oder waren es bereits!</h2>";
 });
 
 
@@ -681,61 +701,59 @@ Route::get('uebung_18_daten_installieren', function () {
 
 Route::get("teste_posts_interests_query_builder_methoden", function () {
 
-	
+
 	// INSERT INTO
 	/*$post = DB::table('posts');
-	dd($post);
+				dd($post);
 
-	$post->insert(
-			[[
-				//'id' => "42",
-				'title' => "Interessante Zahl",
-				'text' => "Woher kommt eigentlich die 42?",
-			],
-			[
-				'title' => "noch was interessantes",
-				'text' => "Wer weiss was!",
-			]	
-				
-			]
-		);
+				$post->insert(
+						[[
+							//'id' => "42",
+							'title' => "Interessante Zahl",
+							'text' => "Woher kommt eigentlich die 42?",
+						],
+						[
+							'title' => "noch was interessantes",
+							'text' => "Wer weiss was!",
+						]	
+							
+						]
+					);
 
-	dd($post);
-	*/
+				dd($post);
+				*/
 	DB::listen(function ($sql) {
 		dump($sql);
 	});
 
-	$posts=DB::table('posts'); //SELECT * ..
+	$posts = DB::table('posts'); //SELECT * ..
 	//dd($posts);
 
-	$posts = $posts->select("id" , "title", "text"); // SELECT  id,titel,text
+	$posts = $posts->select("id", "title", "text"); // SELECT  id,titel,text
 	//dump($posts);
 	$posts = $posts->orderBy('id', 'asc');
-	$posts = $posts->where("id","<", 4); // SELECT  id,titel,text .. WHERE id < 4
+	$posts = $posts->where("id", "<", 4); // SELECT  id,titel,text .. WHERE id < 4
 	//dd($posts);
-	$posts = $posts->orWhere("title","Essen");
-	$post_temp=$posts;
+	$posts     = $posts->orWhere("title", "Essen");
+	$post_temp = $posts;
 
 	$posts = $posts->get(); // SELECT id,titel,text FROM posts;
 	dump($posts);
-	foreach($posts as $post){
-      echo $post->title."<br>"; 
+	foreach ($posts as $post) {
+		echo $post->title . "<br>";
 	}
 
-	$posts=$post_temp->first();
+	$posts = $post_temp->first();
 	dd($posts);
-	
-	echo"<br>".$posts->title; // +"title":"ein Title"
+
+	echo "<br>" . $posts->title; // +"title":"ein Title"
 	dd($posts);
 
 	DB::table('posts')
-	->where('id',2)
-	->update(['text'=>"dies ist ein test"]);
+		->where('id', 2)
+		->update(['text' => "dies ist ein test"]);
 
 	DB::table('posts')
-	->where('id',2)
-	->delete();
+		->where('id', 2)
+		->delete();
 });
-
-// //
