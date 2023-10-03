@@ -1,0 +1,57 @@
+/* Style for the form element */
+form {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    max-width: 400px;
+    display: inline-block;
+  }
+  
+  /* Style for the input elements within the form */
+  form input[type="text"],
+  form input[type="email"],
+  form textarea {
+    display: block;
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Style for the submit button within the form */
+  form input[type="submit"] {
+    background-color: #0074d9;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Style for the table element */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px;
+  }
+  
+  /* Style for table rows */
+  table tr {
+    background-color: #f9f9f9;
+  }
+  
+  /* Style for table headers */
+  table th {
+    background-color: #0074d9;
+    color: #fff;
+    padding: 10px;
+  }
+  
+  /* Style for table cells */
+  table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
