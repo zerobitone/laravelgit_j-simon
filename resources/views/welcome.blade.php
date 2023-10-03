@@ -391,37 +391,48 @@
 </head>
 
 <body class="antialiased">
-    <x-MeldungComponent/>
-    <x-MeldungComponent2/>
-    <x-komponente  class="fett"  farbe="rot" text="guten tag"/>
     <div>
         auf Docker unter Windows<br>
 
+        <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/uebungslinks.html">zu den Links für die
+            Übungen</a><br>
+            
+        <h5>Post - REST - CRUD mit Blade Templates - RAW-Queries</h5>
+        <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/posts">Posts - CRUD</a><br><br>
+
+
+        <h5>Query Builder Beispiele aus Kapitel 15</h5>
+        <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/kap15_teste_posts_interests_query_builder_methoden">Kapitel 15 alle Beispiele</a><br><br>
+
+        <x-MeldungComponent />
+        <x-MeldungComponent2 />
+        <x-komponente class="fett" farbe="rot" text="guten tag" />
 
         <h5>View / Blade Beispiele zur Datenübergabe und Blade-Direkiven</h5>
-        <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/datenview">Beispiel 1 - Übergabe Einfachdaten
+        <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/datenview">Beispiel 1 - Übergabe
+            Einfachdaten
             - Ausgabe</a><br>
         <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/datenview2">Beispiel 2 - Übergabe
             Mehrfachdaten - Ausgabe</a><br>
 
-        <h5> weitere Übergabe - Beispiele<h3>blade</h3>
-            <a href="/bladeview1a">Blade Einführungsseite 1a)</a><br>
-            <a href="/bladeview1b">Blade Einführungsseite 1b)</a><br>
-            <a href="/bladeview1c">Blade Einführungsseite 1c)</a><br>
-            <a href="/bladeview2">Blade Einführungsseite 2)</a><br>
-            <a href="/bladeview3a">Blade Einführungsseite 3a)</a><br>
-            <a href="/bladeview3b">Blade Einführungsseite 3b)</a><br>
-            <a href="/bladeview3c">Blade Einführungsseite 3c)</a><br>
-            <a href="/bladeview4a">Blade Einführungsseite 4a)</a><br>
-            <a href="/bladeview4b">Blade Einführungsseite 4b)</a><br>
-            <a href="/bladeview4c">Blade Einführungsseite 4c)</a><br>
-            <a href="/bladeview5">Blade Einführungsseite 5)</a><br>
-            
-            <br>
+        <h5> weitere Übergabe - Beispiele</h5>
+        <h3>blade</h3>
+        <a href="/bladeview1a">Blade Einführungsseite 1a)</a><br>
+        <a href="/bladeview1b">Blade Einführungsseite 1b)</a><br>
+        <a href="/bladeview1c">Blade Einführungsseite 1c)</a><br>
+        <a href="/bladeview2">Blade Einführungsseite 2)</a><br>
+        <a href="/bladeview3a">Blade Einführungsseite 3a)</a><br>
+        <a href="/bladeview3b">Blade Einführungsseite 3b)</a><br>
+        <a href="/bladeview3c">Blade Einführungsseite 3c)</a><br>
+        <a href="/bladeview4a">Blade Einführungsseite 4a)</a><br>
+        <a href="/bladeview4b">Blade Einführungsseite 4b)</a><br>
+        <a href="/bladeview4c">Blade Einführungsseite 4c)</a><br>
+        <a href="/bladeview5">Blade Einführungsseite 5)</a><br>
+
+        <br>
         <br>
 
-        <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/uebungslinks.html">zu den Links für die
-            Übungen</a><br>
+        
         <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/teste_meeting_controller.html">Test des
             Meeting_Controllers</a>
         <br>
