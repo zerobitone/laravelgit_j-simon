@@ -11,11 +11,11 @@ class Post extends Model
 
     // MASS ASSIGMENT
 
-    //protected $fillable = ['title',"text"];  // whitelist
-    protected $guarded = ['id','created_at','updated_at'];  // oder blacklist, nicht beide!
+    protected $fillable = ['title',"text"];  // whitelist erlaubte Felder
+    //protected $guarded = ['id','created_at','updated_at'];  // oder blacklist, nicht erlaubte,  nicht beide!
 
 
-    
+
     // scope
     public  function scopeNurFuenf($query) {
         return $query->offset(0)->limit(5);

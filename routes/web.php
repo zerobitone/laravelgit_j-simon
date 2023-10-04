@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MeetingController;
+use \App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -925,7 +926,7 @@ Route::get("/eloquent", function () {
 
 	// CREATE 
 	// Neues OBjekt->Datensatz erzeugen
-	$post        = new \App\Models\Post; // neues leeres Objekt
+	$post        = new Post; // neues leeres Objekt
 	$post->title = "Ein neuer Post aus Eloquent erstellt";
 	$post->text  = "Der Text dazu";
 
@@ -934,12 +935,12 @@ Route::get("/eloquent", function () {
 	dump($post); // jetzt in der Datenbank
 
 	// Alle DAtensätze werden auf Objekte abgebildet und einglesen
-	$posts = \App\Models\Post::all();
+	$posts = Post::all();
 	dump($posts);
 
 	// UPDATE
 	//DB::table('posts')->get();
-	$post = \App\Models\Post::find(3);
+	$post = Post::find(3);
 	if ($post) {
 		dump($post);
 		$post->title = "Neuer Titel für die 1";
@@ -949,18 +950,18 @@ Route::get("/eloquent", function () {
 	}
 
 	// DELETE
-	$post = \App\Models\Post::find(4);
+	$post = Post::find(4);
 	if ($post)
 		$post->delete();
 
 	// SELECT
-	dump(\App\Models\Post::all()); // Eloquent Methode aus Kapitel 15
-	dump(\App\Models\Post::where("id", ">", "3")); // QUeryBuilder Kapitel 16
+	dump(Post::all()); // Eloquent Methode aus Kapitel 15
+	dump(Post::where("id", ">", "3")); // QUeryBuilder Kapitel 16
 
 
 	// SubQuery
 	echo "SubQuery";
-	$posts = \App\Models\Post::addSelect(['interest' => \App\Models\Interest::select('text')->whereColumn('id', 'interest_id')->limit(1)])->get();
+	$posts = Post::addSelect(['interest' => \App\Models\Interest::select('text')->whereColumn('id', 'interest_id')->limit(1)])->get();
     dump($posts);
 
 	// Mass Assignment & Mass Update
@@ -971,14 +972,15 @@ Route::get("/eloquent", function () {
 	// QueryBuilder Methoden die Daten verändern
 	// diesen funtionieren nur, wenn in der Model-DAtei hier Post.php eine Variable eingesetzt wird !!
 	echo "Mass Assignment + Update";
-	\App\Models\Post::create( ['title'=>'uebungsaufgabe', 'text'=>'das ist schoen']);
-	\App\Models\Post::updateOrInsert(['title'=>'uebungsaufgabe', 'text'=>'das ist schoen']);
-	\App\Models\Post::where('id', 1)->update(['text' => "neues Hobby"]);
+	Post::create( ['title'=>'uebungsaufgabe', 'text'=>'das ist schoen']);
+	Post::updateOrInsert(['title'=>'uebungsaufgabe', 'text'=>'das ist schoen']);
+	Post::where('id', 1)->update(['text' => "neues Hobby"]);
 
 
 
 
 	// Scope als Methode im Model anlegen scopeNurFuenf() und als nurFuenf() benutzen
 	echo "scope";
-	dump(\App\Models\Post::nurFuenf()->get());
+	dump(Post::nurFuenf()->get());
+	dump(Post::offset(0)->limit(5)->get());
 });
