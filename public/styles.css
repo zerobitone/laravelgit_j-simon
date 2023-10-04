@@ -1,4 +1,16 @@
-/* Style for the form element */
+a:link {
+    color: #000;
+}
+a:visited {
+    color: #000;
+}
+a:hover {
+    color: #000;
+}
+a:active {
+    color: #000;
+}
+
 form {
     margin: 2px;
     padding: 14px;
@@ -6,96 +18,86 @@ form {
     background-color: #f9f9f9;
     max-width: 400px;
     display: inline-block;
-  }
-  
-  /* Style for the input elements within the form */
-  form input[type="text"],
-  form input[type="email"],
-  form textarea {
+}
+
+form input[type="text"],
+form input[type="email"],
+form textarea {
     display: block;
     margin-bottom: 10px;
     padding: 5px;
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
-  
-  /* Style for the submit button within the form */
-  form input[type="submit"] {
+}
+
+form input[type="submit"] {
     background-color: #0074d9;
     color: #fff;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
-  }
-  
-  /* Style for the table element */
-  table {
+}
+
+table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px;
-  }
-  
-  /* Style for table rows */
-  table tr {
+}
+
+table tr {
     background-color: #f9f9f9;
-  }
-  
-  /* Style for table headers */
-  table th {
+}
+
+table th {
     background-color: #0074d9;
     color: #fff;
     padding: 10px;
-  }
-  
-  /* Style for table cells */
-  table td {
+}
+
+table td {
     padding: 10px;
     border: 1px solid #ccc;
-  }
-  
-              
-            
-          
+}
+
 ul {
-  counter-reset: li; 
-  list-style: none; 
-  padding: 0;
-  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    counter-reset: li;
+    list-style: none;
+    padding: 0;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
-ul  {
-  position: relative;
-  display: block;
-  padding: .4em .4em .4em 2em;
-  margin: .5em 0;
-  background: #fcfbf9;
-  color: #444;
-  text-decoration: none;
-  border-radius: .3em;
-  transition: .3s ease-out;
+ul {
+    position: relative;
+    display: block;
+    padding: 0.4em 0.4em 0.4em 2em;
+    margin: 0.5em 0;
+    background: #fcfbf9;
+    color: #444;
+    text-decoration: none;
+    border-radius: 0.3em;
+    transition: 0.3s ease-out;
 }
 
-ul li:hover { background: #E9E4E0; }
-ul li:hover:before { transform: rotate(360deg); }
+ul li:hover {
+    background: #e9e4e0;
+}
+ul li:hover:before {
+    transform: rotate(360deg);
+}
 ul li:before {
-  
-  position: absolute;
-  left: -1.3em;
-  top: 50%;
-  margin-top: -1.3em;
-  background: #f9dd94;
-  height: 2em;
-  width: 2em;
-  line-height: 2em;
-  border: .3em solid #fff;
-  text-align: center;
-  font-weight: bold;
-  border-radius: 2em;
-  transition: all .3s ease-out;
+    position: absolute;
+    left: -1.3em;
+    top: 50%;
+    margin-top: -1.3em;
+    background: #f9dd94;
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    border: 0.3em solid #fff;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 2em;
+    transition: all 0.3s ease-out;
 }
-    
-      
-  
-    

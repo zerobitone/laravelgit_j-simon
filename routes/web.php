@@ -120,8 +120,8 @@ Route::get("/bladeview5", function () {
 	dump($users);
 	return view('blade_unterricht.variablen_uebergabe.bladeview5', compact('users'));
 	/*$inhalt = view('blade_unterricht.variablen_uebergabe.bladeview5', compact('users'));
-												 dump($inhalt);
-												 dd($inhalt->render());*/
+															 dump($inhalt);
+															 dd($inhalt->render());*/
 });
 
 Route::get("/", fn() => view("welcome", []));
@@ -428,9 +428,9 @@ Route::get('question', function (Request $request) {
 
 		return "Ihre Frage wurde erfolgreich gespeichert.";
 		/*return response()->json([
-																												  'art' => "antwort",
-																												  'inhalt' => 'Ihre Frage wurde erfolgreich gespeichert.'
-																											  ]);*/
+																																		  'art' => "antwort",
+																																		  'inhalt' => 'Ihre Frage wurde erfolgreich gespeichert.'
+																																	  ]);*/
 	}
 
 });
@@ -501,17 +501,17 @@ Route::get("/raw_test_insert", function () {
 	echo "start insert ";
 
 	/*DB::insert('INSERT INTO interests (id, text) VALUES (:id,:text)',
-											[
-											   'id' => '17', 
-											   'text' => 'PHP'
-										   ]);
+														[
+														   'id' => '17', 
+														   'text' => 'PHP'
+													   ]);
 
-										   DB::insert('INSERT INTO interests (id, text) VALUES (:id,:text)',
-											[
-											   'id' => '18', 
-											   'text' => 'Pause'
-										   ]);
-									   */
+													   DB::insert('INSERT INTO interests (id, text) VALUES (:id,:text)',
+														[
+														   'id' => '18', 
+														   'text' => 'Pause'
+													   ]);
+												   */
 	DB::insert(
 		'INSERT INTO interests (text, created_at) VALUES (:text, :created_at)',
 		[
@@ -522,16 +522,16 @@ Route::get("/raw_test_insert", function () {
 	);
 
 	/*$daten = [
-											   ['8', "c"],
-											   ['9', "d"]
-										   ];
-										   //DB::insert('INSERT INTO interests (id, text) VALUES (?,?,?)', ['1',"Coding"]);
-										   foreach ($daten as $data) 
-											   DB::insert('INSERT INTO interests (id, text) VALUES (?,?)', $data); 
-										   
-													INSERT			 INTO interests (id,text) 			 VALUES			 (4,"SQL"),			 (5,"PHP");
-										   echo "ende insert";
-										   */
+														   ['8', "c"],
+														   ['9', "d"]
+													   ];
+													   //DB::insert('INSERT INTO interests (id, text) VALUES (?,?,?)', ['1',"Coding"]);
+													   foreach ($daten as $data) 
+														   DB::insert('INSERT INTO interests (id, text) VALUES (?,?)', $data); 
+													   
+																INSERT			 INTO interests (id,text) 			 VALUES			 (4,"SQL"),			 (5,"PHP");
+													   echo "ende insert";
+													   */
 
 });
 /* 
@@ -845,20 +845,7 @@ Route::get("kap15_teste_posts_interests_query_builder_methoden", function () {
 
 	echo "<br>15.13 Joins<br>";
 	$alles = DB::table('posts')
-		->select([
-			'posts.id',
-			'posts.text',
-			'posts.title',
-			'posts.interest_id',
-			'posts.created_at',
-			'posts.updated_at',
 
-			'interests.id AS i_id',
-			'interests.text AS i_text',
-			'interests.created_at AS i_created_at',
-			'interests.updated_at AS i_updated_at',
-
-		])
 		->join('interests', 'interests.id', '=', 'posts.interest_id')
 		->get();
 
@@ -902,19 +889,22 @@ Route::get('uebung_19', function () {
 	dump($posts->get());
 
 	//Aufgabe 2
-	$count_posts = $posts->count();
-	dump($count_posts);
+	$countPosts = $posts->count();
+	dump($countPosts);
 
 	//Aufgabe 3
 	DB::insert('insert into posts (title, text) value (?,?)', ['uebungsaufgabe', 'das ist schoen']);
+	DB::insert('insert into posts (title, text) value (:titel,:text)', ['titel' => 'uebungsaufgabe', 'text' => 'das ist schoen']);
+	$posts = DB::table('posts');
+	dump($posts->get());
 
 	//Aufgabe 4
 	$update = $posts->whereBetween('id', [6, 10])->whereNull('interest_id')->update(['text' => 'interest_id war null, neuer Text']);
-	dump($update);
+	dump($update); // 0
 
 	//Aufgabe 5
 	$created = DB::table('posts')->whereId(2)->value('created_at');
-	dump($created);
+	dump($created); // NULL
 
 	//Aufgabe 6
 	$order_posts = DB::table('posts')->whereNotNull(['text', 'interest_id'])->orderBy('id', 'desc')->get();
@@ -923,4 +913,72 @@ Route::get('uebung_19', function () {
 	//Aufgabe 7
 	$deleted = DB::table('posts')->whereNull('text')->orWhereNull('interest_id')->delete();
 	dump($deleted);
+});
+
+
+
+// Eloquent ORM nach Active Record mit QueryBuilder Methoden
+//use App\Models\Post;
+
+Route::get("/eloquent", function () {
+	// CRUD
+
+	// CREATE 
+	// Neues OBjekt->Datensatz erzeugen
+	$post        = new \App\Models\Post; // neues leeres Objekt
+	$post->title = "Ein neuer Post aus Eloquent erstellt";
+	$post->text  = "Der Text dazu";
+
+	dump($post); // nur im Speicher
+	$post->save();
+	dump($post); // jetzt in der Datenbank
+
+	// Alle DAtensätze werden auf Objekte abgebildet und einglesen
+	$posts = \App\Models\Post::all();
+	dump($posts);
+
+	// UPDATE
+	//DB::table('posts')->get();
+	$post = \App\Models\Post::find(3);
+	if ($post) {
+		dump($post);
+		$post->title = "Neuer Titel für die 1";
+		$post->text  = "eine weiterer Text";
+		$post->save();
+		dump($post);
+	}
+
+	// DELETE
+	$post = \App\Models\Post::find(4);
+	if ($post)
+		$post->delete();
+
+	// SELECT
+	dump(\App\Models\Post::all()); // Eloquent Methode aus Kapitel 15
+	dump(\App\Models\Post::where("id", ">", "3")); // QUeryBuilder Kapitel 16
+
+
+	// SubQuery
+	echo "SubQuery";
+	$posts = \App\Models\Post::addSelect(['interest' => \App\Models\Interest::select('text')->whereColumn('id', 'interest_id')->limit(1)])->get();
+    dump($posts);
+
+	// Mass Assignment & Mass Update
+	// QueryBuilder Methoden am Model eingesetzt die Datensätze erstellen oder öndern benötigen ein
+	// Schutzkonzept
+
+	
+	// QueryBuilder Methoden die Daten verändern
+	// diesen funtionieren nur, wenn in der Model-DAtei hier Post.php eine Variable eingesetzt wird !!
+	echo "Mass Assignment + Update";
+	\App\Models\Post::create( ['title'=>'uebungsaufgabe', 'text'=>'das ist schoen']);
+	\App\Models\Post::updateOrInsert(['title'=>'uebungsaufgabe', 'text'=>'das ist schoen']);
+	\App\Models\Post::where('id', 1)->update(['text' => "neues Hobby"]);
+
+
+
+
+	// Scope als Methode im Model anlegen scopeNurFuenf() und als nurFuenf() benutzen
+	echo "scope";
+	dump(\App\Models\Post::nurFuenf()->get());
 });

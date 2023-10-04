@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-// ooh ein neuer Controller ;-)
 
 use \Illuminate\Support\Facades\DB;
 
@@ -18,9 +17,25 @@ class PostController extends Controller
     public function index()
     {
         // RAW - SQL
-        $posts = DB::select("SELECT * FROM posts");
-    
-        return response()->view('posts.index',compact('posts'));
+        //$posts = DB::select("SELECT * FROM posts");
+        //$interests = DB::select("SELECT * FROM interests");
+        $posts = DB::select("SELECT 
+                                interests.id,
+                                interests.text as interest_text,
+                                interests.created_at,
+                                interests.updated_at,
+                                posts.id,
+                                posts.text,
+                                posts.title,
+                                posts.interest_id,
+                                posts.created_at,
+                                posts.updated_at
+                             FROM posts 
+                             LEFT JOIN interests 
+                             ON interests.id = posts.interest_id");
+        
+
+        return response()->view('posts.index',compact('posts'));//,'interests'));
             
     }
 
@@ -115,3 +130,5 @@ class PostController extends Controller
         return "<br>Der Datensatz wurde versucht zu löschen!<br><a href='/posts'>Zurück zur Übersicht</a>";
     }
 }
+
+
