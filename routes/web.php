@@ -970,17 +970,66 @@ Route::get("/eloquent", function () {
 
 	
 	// QueryBuilder Methoden die Daten verändern
-	// diesen funtionieren nur, wenn in der Model-DAtei hier Post.php eine Variable eingesetzt wird !!
+	// diese funtionieren nur, wenn in der Model-Datei hier Post.php eine Variable eingesetzt wird !!
 	echo "Mass Assignment + Update";
 	Post::create( ['title'=>'uebungsaufgabe', 'text'=>'das ist schoen']);
 	Post::updateOrInsert(['title'=>'uebungsaufgabe', 'text'=>'das ist schoen']);
 	Post::where('id', 1)->update(['text' => "neues Hobby"]);
 
-
-
-
 	// Scope als Methode im Model anlegen scopeNurFuenf() und als nurFuenf() benutzen
 	echo "scope";
 	dump(Post::nurFuenf()->get());
 	dump(Post::offset(0)->limit(5)->get());
+
+	// softdelete
+	// hierfür muss eine Tabellen Änderung des Modells durchgeführt werden,
+	// die Spalte deleted_at wid hinzugefügt in der Migration mit 
+	// $table->softDeletes(); 
+	// in der Modell Klasse Post.php muss dieses aktiviert werden
+	// use Illuminate\Database\Eloquent\SoftDeletes;
+	// use SoftDeletes;   
+	echo "soft delete";
+
+	// DELETE
+	$post = Post::find(2);
+	if ($post)
+		$post->delete();
+
+	echo "Datensatz soft deleted löschen, richtiges löschen funktioniert nicht mehr!!<br>";	
+
+	echo "mit get() werden nur die vorhandenen ohne soft delete angezeigt";
+	$posts = Post::get(); // alle ohne soft deletet, die werden nicht mehr selektiert
+	dump($posts);
+
+	echo "mit withTrashed()->get() werden alle Datensaetze angezeigt";
+	$posts = Post::withTrashed()->get(); // alle ,auch die  soft deletet wurden
+	dump($posts);
+
+	echo "mit onlyTrashed()->get() werden nur die soft deleted Datensaetze angezeigt";
+	$posts = Post::onlyTrashed()->get(); // nur die soft deletet wurden
+	dump($posts);
+
+	echo "den soft deleted Datensatz wieder als nicht geloescht kennzeichnen";
+	$post = Post::withTrashed()->find(2);
+	if($post)
+	  $post->restore();// wieder herstellen
+	$posts = Post::get();
+	dump($posts);
+
+	echo "den Datensatz richtig loeschen mit forceDelete()<br>";
+	$post = Post::find(2);
+	if ($post)
+		$post->forceDelete(); // dauerhaft loeschen
+
+	$posts = Post::get();
+	dump($posts);
+	
+	echo "Im Modell Spalten als Carbon Instanz definieren, danach kann man das Attribut als Object behandeln, wenn man das nicht macht, ist der Zeitstempel ein einfacher String/Text";	
+	$post = Post::find(5);
+	if ($post)
+		dump($post->created_at); // Carbon date
+	dump($post->datum_feld); // String , das Feld muss als TimeStamp in der Migration angelegt werden
+
+
+	
 });
