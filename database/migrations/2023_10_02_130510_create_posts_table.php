@@ -19,6 +19,8 @@ return new class extends Migration
         $table->text('text')->nullable();
         $table->integer('interest_id')->nullable();
         $table->timestamps();
+
+        // weitere Felder durch Schema:table() erweitern in einer eigenen Migration
     });
 }
 

@@ -121,8 +121,8 @@ Route::get("/bladeview5", function () {
 	dump($users);
 	return view('blade_unterricht.variablen_uebergabe.bladeview5', compact('users'));
 	/*$inhalt = view('blade_unterricht.variablen_uebergabe.bladeview5', compact('users'));
-															 dump($inhalt);
-															 dd($inhalt->render());*/
+																			   dump($inhalt);
+																			   dd($inhalt->render());*/
 });
 
 Route::get("/", fn() => view("welcome", []));
@@ -429,9 +429,9 @@ Route::get('question', function (Request $request) {
 
 		return "Ihre Frage wurde erfolgreich gespeichert.";
 		/*return response()->json([
-																																		  'art' => "antwort",
-																																		  'inhalt' => 'Ihre Frage wurde erfolgreich gespeichert.'
-																																	  ]);*/
+																																											  'art' => "antwort",
+																																											  'inhalt' => 'Ihre Frage wurde erfolgreich gespeichert.'
+																																										  ]);*/
 	}
 
 });
@@ -502,17 +502,17 @@ Route::get("/raw_test_insert", function () {
 	echo "start insert ";
 
 	/*DB::insert('INSERT INTO interests (id, text) VALUES (:id,:text)',
-														[
-														   'id' => '17', 
-														   'text' => 'PHP'
-													   ]);
+																		  [
+																			 'id' => '17', 
+																			 'text' => 'PHP'
+																		 ]);
 
-													   DB::insert('INSERT INTO interests (id, text) VALUES (:id,:text)',
-														[
-														   'id' => '18', 
-														   'text' => 'Pause'
-													   ]);
-												   */
+																		 DB::insert('INSERT INTO interests (id, text) VALUES (:id,:text)',
+																		  [
+																			 'id' => '18', 
+																			 'text' => 'Pause'
+																		 ]);
+																	 */
 	DB::insert(
 		'INSERT INTO interests (text, created_at) VALUES (:text, :created_at)',
 		[
@@ -523,16 +523,16 @@ Route::get("/raw_test_insert", function () {
 	);
 
 	/*$daten = [
-														   ['8', "c"],
-														   ['9', "d"]
-													   ];
-													   //DB::insert('INSERT INTO interests (id, text) VALUES (?,?,?)', ['1',"Coding"]);
-													   foreach ($daten as $data) 
-														   DB::insert('INSERT INTO interests (id, text) VALUES (?,?)', $data); 
-													   
-																INSERT			 INTO interests (id,text) 			 VALUES			 (4,"SQL"),			 (5,"PHP");
-													   echo "ende insert";
-													   */
+																			 ['8', "c"],
+																			 ['9', "d"]
+																		 ];
+																		 //DB::insert('INSERT INTO interests (id, text) VALUES (?,?,?)', ['1',"Coding"]);
+																		 foreach ($daten as $data) 
+																			 DB::insert('INSERT INTO interests (id, text) VALUES (?,?)', $data); 
+																		 
+																				  INSERT			 INTO interests (id,text) 			 VALUES			 (4,"SQL"),			 (5,"PHP");
+																		 echo "ende insert";
+																		 */
 
 });
 /* 
@@ -962,18 +962,18 @@ Route::get("/eloquent", function () {
 	// SubQuery
 	echo "SubQuery";
 	$posts = Post::addSelect(['interest' => \App\Models\Interest::select('text')->whereColumn('id', 'interest_id')->limit(1)])->get();
-    dump($posts);
+	dump($posts);
 
 	// Mass Assignment & Mass Update
 	// QueryBuilder Methoden am Model eingesetzt die Datensätze erstellen oder öndern benötigen ein
 	// Schutzkonzept
 
-	
+
 	// QueryBuilder Methoden die Daten verändern
 	// diese funtionieren nur, wenn in der Model-Datei hier Post.php eine Variable eingesetzt wird !!
 	echo "Mass Assignment + Update";
-	Post::create( ['title'=>'uebungsaufgabe', 'text'=>'das ist schoen']);
-	Post::updateOrInsert(['title'=>'uebungsaufgabe', 'text'=>'das ist schoen']);
+	Post::create(['title' => 'uebungsaufgabe', 'text' => 'das ist schoen']);
+	Post::updateOrInsert(['title' => 'uebungsaufgabe', 'text' => 'das ist schoen']);
 	Post::where('id', 1)->update(['text' => "neues Hobby"]);
 
 	// Scope als Methode im Model anlegen scopeNurFuenf() und als nurFuenf() benutzen
@@ -995,7 +995,7 @@ Route::get("/eloquent", function () {
 	if ($post)
 		$post->delete();
 
-	echo "Datensatz soft deleted löschen, richtiges löschen funktioniert nicht mehr!!<br>";	
+	echo "Datensatz soft deleted löschen, richtiges löschen funktioniert nicht mehr!!<br>";
 
 	echo "mit get() werden nur die vorhandenen ohne soft delete angezeigt";
 	$posts = Post::get(); // alle ohne soft deletet, die werden nicht mehr selektiert
@@ -1011,8 +1011,8 @@ Route::get("/eloquent", function () {
 
 	echo "den soft deleted Datensatz wieder als nicht geloescht kennzeichnen";
 	$post = Post::withTrashed()->find(2);
-	if($post)
-	  $post->restore();// wieder herstellen
+	if ($post)
+		$post->restore(); // wieder herstellen
 	$posts = Post::get();
 	dump($posts);
 
@@ -1023,13 +1023,284 @@ Route::get("/eloquent", function () {
 
 	$posts = Post::get();
 	dump($posts);
-	
-	echo "Im Modell Spalten als Carbon Instanz definieren, danach kann man das Attribut als Object behandeln, wenn man das nicht macht, ist der Zeitstempel ein einfacher String/Text";	
+
+	echo "Im Modell Spalten als Carbon Instanz definieren, danach kann man das Attribut als Object behandeln, wenn man das nicht macht, ist der Zeitstempel ein einfacher String/Text";
 	$post = Post::find(5);
-	if ($post)
+	if ($post) {
 		dump($post->created_at); // Carbon date
-	dump($post->datum_feld); // String , das Feld muss als TimeStamp in der Migration angelegt werden
+		dump($post->datum_feld); // String , das Feld muss als TimeStamp in der Migration angelegt werden
+	}
 
+
+});
+
+/*
+	uebung_21
+	
+	Hinweis: In der interests - Route sind mehrere Beispiel auskommentiert, diese bei Bedarf wieder aktivieren!
+
+	URLs zum Eintragen der Datensätze:
+
+	http://routinglaravel.test/interest/create/Programmieren
+	http://routinglaravel.test/interest/create/Lesen
+	http://routinglaravel.test/interest/create/Politik
+	http://routinglaravel.test/interest/create/Sport
+	http://routinglaravel.test/interest/create/Gaming
+
+	http://routinglaravel.test/article/create/LaravelCRUD/CreateReadUpdateDelete/1
+	http://routinglaravel.test/article/create/Politik/Umwelt ist toll Wirtschaft aber auch/3
+	http://routinglaravel.test/article/create/Formel1/Autorennen macht viel Spa? beim Zusehen/4
+
+	URLs zum Ansehen der Datensätze:
+
+	http://routinglaravel.test/articles
+	http://routinglaravel.test/interests
 
 	
+	
+*/
+use App\Models\Interest;
+use App\Models\Article;
+
+// Artikel erstellen
+Route::get('article/create/{title}/{text}/{interest_id}/', function ($title, $text, $interest_id) {
+
+	$article = new Article;
+
+	$article->title       = $title;
+	$article->text        = $text;
+	$article->interest_id = $interest_id;
+
+	$article->save();
+});
+
+// Interessen erstellen
+Route::get('interest/create/{text}', function ($text) {
+	$interest = new Interest;
+
+	$interest->text = $text;
+
+	$interest->save();
+});
+
+// Artikel anzeigen
+Route::get('articles', function () {
+	$articles = Article::all();
+
+	dump($articles);
+});
+
+// Interessen anzeigen
+Route::get('interests', function () {
+
+
+	$interests = Interest::all();
+	dump($interests);
+	echo "<b>Hinweis: In der interests - Route sind mehrere Beispiel auskommentiert, diese bei Bedarf wieder aktivieren!</b><br>";
+	// Hinweis: In der interests - Route sind mehrere Beispiel auskommentiert, diese bei Bedarf wieder aktivieren!
+	/*
+					  // suchen nach ID
+					  $interests = Interest::findOrFail(1); // wird gefunden!
+					  //$interests = Interest::findOrFail(3443543); // wird nicht gefunden! 404
+					  var_dump($interests);
+					  */
+
+	/*
+				   // suchen nach exaktem Text 
+				   $interests = Interest::whereText("Politik")->get(); // wird gefunden!
+				   // oder nur erstes, wenn mehrere!
+				   //$interests = Interest::whereText("Politik")->first();
+				   var_dump($interests);
+				   */
+
+	/*
+				   // suchen , finden und Text aendern
+				   $interest = Interest::whereText("Politik")->first(); // geht nur einmal!! dann Fehler!
+				   $interest->text="Chillen";
+				   $interest->save();
+				   var_dump($interest);
+				   */
+
+	/*
+				   // suchen , finden und loeschen (dauerhaft!!!/ richtiges DELETE FROM ....)
+				   $interest = Interest::whereId(3)->first();
+				   $interest->delete();
+				   var_dump($interest);
+				   */
+});
+
+/*
+	jetzt nochmal was loeschen und drauf achten, deleted NULL nicht NULL!
+	
+	http://routinglaravel.test/interest/delete/1 oder 2 oder ...
+	
+	
+*/
+
+Route::get('interest/delete/{id}', function ($id) {
+	$interest = Interest::whereId($id)->first();
+	$interest->delete();
+	dump($interest);
+
+});
+
+// http://routinglaravel.test/interests/with_trashed
+
+Route::get('interests/with_trashed', function () {
+	$interests_trashed = Interest::withTrashed()->get();
+	dump($interests_trashed);
+
+});
+
+// http://routinglaravel.test/interest/only_trashed
+Route::get('interests/only_trashed', function () {
+	$interest = Interest::onlyTrashed()->get();
+	dump($interest);
+
+});
+
+Route::get('article/create_ma/{title}/{text}', function ($title, $text) {
+
+	Article::create(['title' => $title, 'text' => $text]);
+
+});
+
+// Übung 21 Ende
+
+// Eloquent-Beziehungen 
+Route::get("/1_n_save_article_with_interest_eloquent", function () {
+
+	$article = new Article();
+
+	$article->title = 'Speichern';
+	$article->text  = 'Wir speichern einen neuen Artikel mit der save Methode, direkt mit Interesse zugeordnet, hier die 1';
+	//$article->interest_id = 4; // Vorsicht nicht so arbeiten
+	//$article->save();
+
+	$interest = Interest::find(4);
+	if ($interest) {
+		$interest->articles()->save($article);
+
+		// save many
+		$article1 = new Article();
+
+		$article1->title = '1 - Speichern';
+		$article1->text  = '1 - Wir speichern mehrere neue Artikel mit der saveMany Methode, direkt mit Interesse zugeordnet, hier die 1';
+
+		$article2 = new Article();
+
+		$article2->title = '2 - Speichern';
+		$article2->text  = '2 - Wir speichern mehrere neue Artikel mit der saveMany Methode, direkt mit Interesse zugeordnet, hier die 1';
+
+		$articles = [$article1, $article2];
+		$interest->articles()->saveMany($articles);
+		echo "gespeichert!";
+	} else
+		echo "interest nicht in der TAbelle gefunden!";
+});
+
+
+Route::get("1_n_update_article_with_interest_eloquent", function () {
+
+	$interest = Interest::find(1); //id = 1
+
+	dump($interest); // int , string , float, boolean, array , object
+	// object -> Klasse 
+
+	if ($interest) {
+
+		$article = Article::findOrFail(1);
+
+		// Vorsicht, es muss richtig rum konstruiert werden
+		$article->interest()->associate($interest);
+
+
+		$article->save();
+		echo "gespeichert!";
+
+	} else
+		echo "interest nicht in der TAbelle gefunden!";
+
+	return "";
+});
+
+//Eager Load
+//eine Anfrage um alle Artikel zu erhalten
+//eine Anfrage um die entsprechenden Interessen zu erhalten
+Route::get("eager_loading", function () {
+	echo "in der debugbar sieht man das eager loading im vergleich zur Variante ohne<br>";
+
+	$articles = Article::with('interest')->get(); // mit eager loading
+	$articles = Article::get(); // ohne eager loading
+	dump($articles);
+
+	foreach ($articles as $article) {
+		echo $article->title . " - ";
+		echo $article->interest->text;
+		echo "<br>";
+	}
+
+	return "";
+});
+
+use App\Models\Tag;
+use App\Models\Product;
+
+Route::get("m_m_relation", function () {
+	Product::truncate();
+	Tag::truncate();
+	DB::table("product_tag")->truncate();
+
+	$product              = new Product();
+	$product->name        = 'Sample Product 1';
+	$product->description = 'lorem ipsum';
+	$product->price       = 19.99;
+	$product->save();
+
+	$product              = new Product();
+	$product->name        = 'Sample Product 2';
+	$product->description = 'lorem ipsum';
+	$product->price       = 19.99;
+	$product->save();
+
+	$tag       = new Tag();
+	$tag->name = 'Sample Tag 1';
+	$tag->save();
+
+	$tag       = new Tag();
+	$tag->name = 'Sample Tag 2';
+	$tag->save();
+
+	// 1 - 1
+	$product = Product::find(1);
+	$tag     = Tag::find(1);
+
+	$product->tags()->attach($tag->id);
+
+	// 1 - 2
+	$product = Product::find(1);
+	$tag     = Tag::find(2);
+
+	$product->tags()->attach($tag->id);
+
+
+	// 2 - 1
+	$product = Product::find(2);
+	$tag     = Tag::find(1);
+
+	$product->tags()->attach($tag->id);
+
+
+	$products = Product::all();
+	//dump($products);
+
+	foreach ($products as $product) {
+		echo $product->name ."   ".$product->description. "  <b>Tags:</b> ";
+		//dump($product->tags);
+
+		foreach ($product->tags as $tag  ) {
+			echo $tag->name . ", ";
+		}
+		echo "<br>";
+	}
 });

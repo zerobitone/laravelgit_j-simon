@@ -10,6 +10,24 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'detail'
+        'name',
+        'detail'
     ];
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    // Accessor
+    public function getDescriptionAttribute($value)
+    {
+        return strtoupper($value);
+    }
+
+    // Mutator
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = "!".ucfirst($value)."!";
+    }
 }

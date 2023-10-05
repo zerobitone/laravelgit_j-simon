@@ -89,6 +89,51 @@
     <h3>Übung 19  - Query Builder Befehle mit der posts Tabelle</h3>
     <a href="/uebung_19">Lösung Übung 19</a><br>
    
+    <h3>Übung 20 </h3>
+<p> php artisan make:model Interest<br>
+    php artisan make:model Article -m <br>
+    <pre>
+        // Die up()-Methode  in der articles - Migration-Datei überkopieren, für die geforderten Spalten
+        public function up()
+		{
+			Schema::create('articles', function (Blueprint $table) {
+				$table->bigIncrements('id');
+				$table->string("title");
+				$table->text('text');
+				$table->integer('interest_id')->nullable();
+				$table->timestamps();
+			});
+		}
+    </pre>
+<p>php artisan migrate</p>
+</p>
+    <h3>Übung 21 </h3>
+    <p>Die Übung 20 muss vorher ausgeführt worden sein!</p>
+    <p>Und die Change-Migration zum einfügen der deleted_at Spalte, sonst gibt es Fehlermeldungen!!</p>!</p>
+    <pre>
+        php artisan make:migration add_softdeletes_to_interests_table
+        php artisan migrate
+    </pre>
+    <p>URLs zum Eintragen der Datensätze:</p>
+    <a href="/interest/create/Programmieren">/interest/create/Programmieren</a><br>
+    <a href="/interest/create/Lesen">/interest/create/Lesen</a><br>
+    <a href="/interest/create/Politik">/interest/create/Politik</a><br>
+    <a href="/interest/create/Sport">/interest/create/Sport</a><br>
+    <a href="/interest/create/Gaming">/interest/create/Gaming</a><br>
+    <a href="/article/create/LaravelCRUD/CreateReadUpdateDelete/1">/article/create/LaravelCRUD/CreateReadUpdateDelete/1</a><br>
+    <a href="/article/create/Politik/Umwelt%20ist%20toll%20Wirtschaft%20aber%20auch/3">/article/create/Politik/Umwelt%20ist%20toll%20Wirtschaft%20aber%20auch/3</a><br>
+    <a href="/article/create/Formel1/Autorennen%20macht%20viel%20Spaß%20beim%20Zusehen/4">/article/create/Formel1/Autorennen%20macht%20viel%20Spaß%20beim%20Zusehen/4</a><br>
+    <p>URLs zum Ansehen der Datensätze:</p>
+    <a href="/articles">alle Artikel anzeigen</a><br>
+    <a href="/interests">alle Interessen anzeigen</a><br>
+    <p>URLs zum Löschen mit soft delete</p>
+    <a href="/interest/delete/1">/interest/delete/1</a><br>
+    <a href="/interest/delete/2">/interest/delete/2</a><br>
+    <p>URL zum Testen von mit trashed und ohne</p>
+    <a href="/interests/with_trashed">/interests/with_trashed</a><br>
+    <a href="/interests/only_trashed">/interests/only_trashed</a><br>
+    <p>URL zum Einfügen mit QueryBuilder - MASS ASSIGNMENT muss aktiveiert sein!</p>
+    <a href="/article/create_ma/Neuer Artikel/der kann was">/article/create_ma/Neuer Artikel/der kann was</a><br>
 </body>
 
 </html>

@@ -396,7 +396,14 @@
 
         <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/uebungslinks.html">zu den Links für die
             Übungen</a><br>
-            
+            <h5>Eloquent - Beziehungen, aus Kapitel 16.2</h5>    
+            <a href="/1_n_save_article_with_interest_eloquent">/1_n_save_article_with_interest_eloquent</a><br>    
+            <a href="/1_n_update_article_with_interest_eloquent">/1_n_update_article_with_interest_eloquent</a><br>    
+            <a href="/m_m_relation">m_m_relation mit Accesor und Mutator aus Kap. 16.3</a><br>
+            <a href="/eager_loading">eager_loading</a>
+        <h5>Eloquent, alles aus Kapitel 16.1</h5>
+        <a href="/eloquent">/eloquent</a><br>
+
         <h5>Post - REST - CRUD mit Blade Templates - RAW-Queries</h5>
         <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/posts">Posts - CRUD</a><br><br>
 
