@@ -15,7 +15,7 @@ return new class extends Migration
     {
         //
         Schema::table('posts', function (Blueprint $table) {
-            $table->softDeletes(); 
+            $table->softDeletes();  // sol
             $table->timestamp('datum_feld')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }

@@ -1170,6 +1170,29 @@ Route::get('article/create_ma/{title}/{text}', function ($title, $text) {
 // Eloquent-Beziehungen 
 Route::get("/1_n_save_article_with_interest_eloquent", function () {
 
+	// 2 Sql Statements
+	$article=App\Models\Article::find(1); // 1. Sql Statement
+	$interest_id=$article->interest_id; // 1
+	$interest = App\Models\Interest::find($interest_id); // 2. Sql Statements
+	//dump($interest->text);
+
+
+	$article=App\Models\Article::find(1);// 1. Sql Statement
+
+	//-> Attribut interest // Methode interest()
+	dump($article->interest->text); //singen , erzeugt auch unsichtbar ein SQL-Statement
+
+
+
+	$interest=App\Models\Interest::find(4); // 1. Sql Statement
+	dump($interest->articles);
+/*
+	foreach ( $interest->articles  as $article) {
+		echo $article->title."<br>"; 
+	}*/
+	dump($interest->articles->title);
+
+	// neuer Artikel
 	$article = new Article();
 
 	$article->title = 'Speichern';
@@ -1177,11 +1200,14 @@ Route::get("/1_n_save_article_with_interest_eloquent", function () {
 	//$article->interest_id = 4; // Vorsicht nicht so arbeiten
 	//$article->save();
 
+	// gewuenchtes Interesse, das bereits besteht, auswaählen
 	$interest = Interest::find(4);
 	if ($interest) {
+		// für den Artikel speichern
 		$interest->articles()->save($article);
 
 		// save many
+		// und nochmal dieses Interesse auf mehrere Artikel speichern
 		$article1 = new Article();
 
 		$article1->title = '1 - Speichern';
@@ -1197,6 +1223,7 @@ Route::get("/1_n_save_article_with_interest_eloquent", function () {
 		echo "gespeichert!";
 	} else
 		echo "interest nicht in der TAbelle gefunden!";
+		
 });
 
 
@@ -1274,13 +1301,14 @@ Route::get("m_m_relation", function () {
 	// 1 - 1
 	$product = Product::find(1);
 	$tag     = Tag::find(1);
-
+	// manyToMany 1 : 1
 	$product->tags()->attach($tag->id);
 
 	// 1 - 2
 	$product = Product::find(1);
 	$tag     = Tag::find(2);
 
+	// 1 : 2 
 	$product->tags()->attach($tag->id);
 
 
@@ -1288,6 +1316,7 @@ Route::get("m_m_relation", function () {
 	$product = Product::find(2);
 	$tag     = Tag::find(1);
 
+	// 2 - 1 
 	$product->tags()->attach($tag->id);
 
 
