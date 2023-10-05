@@ -1222,7 +1222,7 @@ Route::get("/1_n_save_article_with_interest_eloquent", function () {
 		$interest->articles()->saveMany($articles);
 		echo "gespeichert!";
 	} else
-		echo "interest nicht in der TAbelle gefunden!";
+		echo "interest nicht in der Tabelle gefunden!";
 		
 });
 
@@ -1279,23 +1279,23 @@ Route::get("m_m_relation", function () {
 	DB::table("product_tag")->truncate();
 
 	$product              = new Product();
-	$product->name        = 'Sample Product 1';
-	$product->description = 'lorem ipsum';
+	$product->name        = 'Buch als Produkt 1';
+	$product->description = 'ein schönes Buch';
 	$product->price       = 19.99;
 	$product->save();
 
 	$product              = new Product();
-	$product->name        = 'Sample Product 2';
-	$product->description = 'lorem ipsum';
+	$product->name        = 'Auto als Produkt 2';
+	$product->description = 'Ein schönes Auto';
 	$product->price       = 19.99;
 	$product->save();
 
 	$tag       = new Tag();
-	$tag->name = 'Sample Tag 1';
+	$tag->name = 'Freizeit';
 	$tag->save();
 
 	$tag       = new Tag();
-	$tag->name = 'Sample Tag 2';
+	$tag->name = 'Bildung';
 	$tag->save();
 
 	// 1 - 1
