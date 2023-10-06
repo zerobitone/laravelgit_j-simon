@@ -1337,3 +1337,5 @@ Route::get("m_m_relation", function () {
 	}
 });
 
+// uebung_25
+Route::resource("article",App\Http\Controllers\ArticleController::class);
