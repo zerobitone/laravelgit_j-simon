@@ -394,8 +394,13 @@
     <div>
         auf Docker unter Windows<br>
 
+
         <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/uebungslinks.html">zu den Links für die
             Übungen</a><br>
+           
+            <h5>CRUD - Beispiel mit dem Meeting ResourceRoute - ResourceController - BladeViews mit CSRF_Schutz - Eloquent/ Query Builder - und Form-Validierung</h5>    
+            <a href="/meetings">Übersicht aller Meetings</a><br>    
+           
             <h5>Eloquent - Beziehungen, aus Kapitel 16.2</h5>    
             <a href="/1_n_save_article_with_interest_eloquent">/1_n_save_article_with_interest_eloquent</a><br>    
             <a href="/1_n_update_article_with_interest_eloquent">/1_n_update_article_with_interest_eloquent</a><br>    

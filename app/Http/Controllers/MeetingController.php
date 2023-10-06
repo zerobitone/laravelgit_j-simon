@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Meeting;
-use app\Http\Requests\FormValidationRequest;
+use App\Http\Requests\FormValidationRequest;
 use Illuminate\Support\Collection;
 
 class MeetingController extends Controller
