@@ -237,6 +237,9 @@ Route::get('/user/{name?}', function ($name = null) {
 })->name('nickname');
 
 
+// für das Testen der PUT-Methode ohne Blade-Views
+Route::put('/meetings_formular/{id}', [MeetingController::class,"updateFormular"]);
+
 
 
 Route::resource('/meetings', MeetingController::class)
@@ -1333,3 +1336,4 @@ Route::get("m_m_relation", function () {
 		echo "<br>";
 	}
 });
+

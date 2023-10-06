@@ -78,13 +78,14 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $product)
+    public function update(Request $request,Product  $product)
     {
         $request->validate([
             'name' => 'required',
             'detail' => 'required',
         ]);
-    dd($product);
+    dump($product);
+    dump($request->all());
         $product->update($request->all());
     
         return redirect()->route('products.index')

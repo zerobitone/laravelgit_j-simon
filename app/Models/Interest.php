@@ -21,4 +21,5 @@ class Interest extends Model
         //return $this->hasOne('App\Models\Article', 'fremdschlüssel_article', 'primärschlüssel_interest');
     }
     
+    
 }

@@ -3,35 +3,41 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Meeting;
+use app\Http\Requests\FormValidationRequest;
+use Illuminate\Support\Collection;
 
 class MeetingController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the meeting.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index( ):string
+    public function index()
     {
-        echo "hallo";
-        // zeige alle Meetings an
-        // select - sql => alle meetings abholen
-        
-        //return view("uebersicht_alle",$meetings);
-        return "index - MeetingController";
-        
+        // alle Meetings aus der Database anzeigen
+        // einmalige Vorarbeiten:
+        // Migrations-Datei mit artisan erstellen, gewünschte Tabellenfelder einfügen und migrieren
+        // ein Model Meeting erstellen
+
+        //  jetzt mit Eloquent alle Meeting Models einlesen (alle Datensätze)
+        $meetings = Meeting::all();
+
+        // View mit paren-layout einmalig vorbereiten und die index-blade bekommt inhalt
+        return response()->view('meetings.index',compact('meetings'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new meeting.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
-        return response("create - MeetingController");
+        return response()->view('meetings.create');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -41,12 +47,23 @@ class MeetingController extends Controller
      */
     // depedency injection - di
     // injiziert eine Abhängigkeit
-    // wir wollen die im Browser in der ANfrage mitgebrachten Daten verarbeiten!
-    public function store(Request $request)
+    // wir wollen die im Browser in der Anfrage mitgebrachten Daten verarbeiten!
+    public function store(FormValidationRequest $request) 
     {
-        //
-        return "store - MeetingController";
+        
+
+        //dump($request->all());
+        $formularDaten = $request->all();
+
+        $meeting = new Meeting; // neue Meeting Instanz anlegen
+        $meeting->title = $formularDaten['title']; 
+        $meeting->description = $formularDaten['description']; 
+        $meeting->save(); // in Datenbank speichern - insert into
+
+        return redirect()->route("meetings.index"); // zurück zur index-Seite
     }
+
+
 
     /**
      * Display the specified resource.
@@ -56,10 +73,9 @@ class MeetingController extends Controller
      */
     public function show(int $id)
     {
-        //
         // zeige ein Meetings an
-        // select .. where id=$id- sql => alle meetings abholen
-        return "show ". $id. " - MeetingController";
+        $meeting = Meeting::find($id); // Meeting Model (Instanz) aus der Datenbank lesen
+        return response()->view('meetings.show',compact('meeting'));
     }
 
     /**
@@ -70,8 +86,9 @@ class MeetingController extends Controller
      */
     public function edit($id)
     {
-        //
-        return "edit ". $id. " - MeetingController";
+        $meeting = Meeting::find($id); // Model aus DB lesen
+        
+        return response()->view('meetings.edit',compact('meeting')); // zur edit-view mit den Daten des Meetings
     }
 
     /**
@@ -81,9 +98,48 @@ class MeetingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    //$request = new Request("allen Daten des qeuest")
-    public function update(Request $request, $id)
+    //$request = new Request("allen Daten aus dem request")
+    public function update(FormValidationRequest $request,$id)
     {
+        // alternative ist eine Klasse die artisan gebaut
+        /*$request->validate([
+            'title' => 'required|max:255',
+            'description' => ['required', 'max:255'],
+        ]);*/
+
+        // alternative
+        Meeting::find($id)->update($request->all()); // $fillable !
+
+        // alternative
+    //    $meeting = Meeting::find($id);
+    //    $meeting->title=$request->title;
+    //    $meeting->description=$request->description;
+    //    $meeting->save(); // update - ändern in der Datenbank
+       
+       
+        return redirect()->route("meetings.index"); // zurück zur index-Seite
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $meeting = Meeting::find($id);
+        $meeting->delete();
+        return redirect()->route("meetings.index");
+    }
+
+
+
+    // aus der alten Übung, damit diese noch funktioniert!
+    public function updateFormular(Request $request, $id)
+    {
+        
+        //
         dump($request->path());
         dump($request->url());
         dump($request->method()); // GET / POST / PUT
@@ -138,16 +194,6 @@ class MeetingController extends Controller
 
         return "update ". $id. " - MeetingController Das Meeting heisst :".$titel." Die Uhrzeit ist:".$uhrzeit;
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-        return "destroy ". $id. " - MeetingController";
-    }
 }
+
+

@@ -13,6 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
-        '/*' // Ausnahme des Schutzsystems für alle Routes
+        '/meetings_formular*' // Ausnahme des Schutzsystems für ein Route
     ];
 }
