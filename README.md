@@ -21,46 +21,96 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## About this project
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+PHP course -  Chapter: LARAVEL BASICS by instructor [Jens Simon ](https://github.com/j-simon)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Vorbereitung
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+if port 80 is occupied
+```bash
+sudo service apache2 status
+```
+or
+```bash
+sudo service ngnix status
+```
+```bash
+sudo service apache2 stop
+```
+or
+```bash
+sudo service nginx stop
+```
+when mysql is running
+```bash
+sudo service mysql stop
+```
 
-## Laravel Sponsors
+## Installation with docker
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+#### 1. Clone the project
+```bash
+git clone https://github.com/zerobitone/collectively.git
+```
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+#### 2. Run `composer install`
+Navigate into project folder using terminal and run
 
-## Contributing
+```bash
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php82-composer:latest \
+    composer install --ignore-platform-reqs
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### 3. Copy `.env.example` into `.env`
+only when the project is initialized for the first time
 
-## Code of Conduct
+```bash
+cp .env.example .env
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### 4. Start the project in detached mode
 
-## Security Vulnerabilities
+```bash
+./vendor/bin/sail up -d 
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### 5. Set encryption key
+only when the project is initialized for the first time
+```bash
+./vendor/bin/sail artisan key:generate --ansi
+```
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### 6. Run migrations
+only when the project is initialized for the first time
+```bash
+./vendor/bin/sail artisan make:migration create_laravel_database
+```
+```bash
+./vendor/bin/sail artisan migrate
+```
+### Access to the docker container
+```bash
+./vendor/bin/sail bash
+```
+inside docker container run
+```bash
+npm install
+```
+and
+```bash
+npm run dev
+```
+### to stop server
+```bash
+./vendor/bin/sail down -v
+```
+to start again
+```bash
+./vendor/bin/sail up -d
+```
